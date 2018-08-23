@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/back15"
+    android:gravity="center_horizontal">
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            >
+
+            <EditText
+                android:id="@+id/et_input_id"
+                android:layout_width="240dp"
+                android:layout_height="50dp"
+                android:layout_gravity="left"
+                android:layout_weight="2"
+                android:background="@drawable/nonclick_edittext"
+                android:hint="아이디를 입력하세요"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textColor="#ffffff"
+                android:textColorHint="@color/texthintcolor"
+                android:textSize="20dp" />
+
+             <Button
+                android:id="@+id/btn_check_id"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                 android:layout_weight="1"
+                android:background="@drawable/nonclick_edittext"
+                android:text="중복 확인"
+                android:textColor="@color/textcolor" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txt_error_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:text="아이디를 입력해주세요."
+            android:textColor="@color/texterrorcolor"
+            />
+        <EditText
+            android:id="@+id/et_input_pw1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="비밀번호를 입력하세요"
+            android:textSize="20dp"
+            android:singleLine="true"
+            android:textColorHint="@color/texthintcolor"
+            android:background="@drawable/nonclick_edittext"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:padding="10dp"
+            android:password="true"
+            />
+        <TextView
+            android:id="@+id/txt_error_pw1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/texterrorcolor"
+            android:visibility="gone"
+            android:text="비밀번호를 입력해주세요."
+            />
+
+        <EditText
+            android:id="@+id/et_input_pw2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="비밀번호를 확인하세요"
+            android:textSize="20dp"
+            android:singleLine="true"
+            android:textColorHint="@color/texthintcolor"
+            android:background="@drawable/nonclick_edittext"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:padding="10dp"
+            android:password="true"
+            />
+        <TextView
+            android:id="@+id/txt_error_pw2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/texterrorcolor"
+            android:visibility="gone"
+            android:text="비밀번호가 일치하지 않습니다."
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back15"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp">
+
+        <EditText
+            android:id="@+id/et_input_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="left"
+            android:background="@drawable/nonclick_edittext"
+            android:hint="이름을 입력하세요"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textColorHint="@color/texthintcolor"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/txt_error_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="이름을 입력해주세요."
+            android:textColor="@color/texterrorcolor" />
+
+
+        <EditText
+            android:id="@+id/et_input_user_phone"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/nonclick_edittext"
+            android:digits="1234567890-"
+            android:hint="사용자 번호를 입력하세요"
+            android:inputType="phone"
+            android:maxLength="13"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textColorHint="@color/texthintcolor"
+            android:textSize="20dp" />
+        <TextView
+            android:id="@+id/txt_error_user_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="사용자 번호를 입력해주세요."
+            android:textColor="@color/texterrorcolor"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>
