@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 
 import com.example.seungmin1216.team.R;
@@ -38,6 +39,7 @@ public class BusFragment extends Fragment {
     private Unbinder unbinder;
 
     @BindView(R.id.et_bus_num) EditText et_bus_num;
+    @BindView(R.id.busLayout) RelativeLayout busLayout;
 
 
     @Nullable

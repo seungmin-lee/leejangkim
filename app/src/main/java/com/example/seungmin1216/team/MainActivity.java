@@ -1,10 +1,12 @@
 package com.example.seungmin1216.team;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         main_view.setAdapter(viewPagerAdapter);
+
 
 
         main_view.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
