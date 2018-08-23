@@ -1,5 +1,7 @@
 package com.example.seungmin1216.team.retrofit;
 
+import com.example.seungmin1216.team.data.Member;
+
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -31,6 +33,8 @@ public interface RetrofitRequest {
                            @Field("mem_myp") String mem_myp, @Field("mem_email") String mem_addr, @Field("mem_subp") String mem_subp,
                            @Field("mem_etc") String mem_kind,@Field("mem_age") String mem_age);
 
-
+    @FormUrlEncoded
+    @POST("logMember.do")//로그인
+    Call<Member> logMember(@Field("mem_mid") String mem_mid ,@Field("mem_pw") String mem_pw);
 
 }
