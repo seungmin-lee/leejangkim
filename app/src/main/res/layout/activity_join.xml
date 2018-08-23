@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".JoinActivity"
     android:background="@drawable/back15"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:windowSoftInputMode="adjustResize"
+    >
 
 
 

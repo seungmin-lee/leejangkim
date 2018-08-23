@@ -159,6 +159,7 @@ public class JoinActivity extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             Log.d("lsm","전송성공");
+
                         }
                     }
 

@@ -4,16 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.example.seungmin1216.team.data.Member;
+import com.example.seungmin1216.team.retrofit.RetrofitService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_login) Button btn_login;
@@ -42,14 +50,49 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_login)
     public void onClickBtnLogin(View view){
-        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-        startActivity(intent);
+
+       final String id = et_user_id.getText().toString();
+        final String pw = et_user_pw.getText().toString();
+
+        Call<Member> observ = RetrofitService.getInstance().getRetrofitRequest().logMember(id,pw);
+        observ.enqueue(new Callback<Member>() {
+            @Override
+            public void onResponse(Call<Member> call, Response<Member> response) {
+                if (response.isSuccessful()) {
+                    Log.d("lsm","전송성공");
+                    Member member = response.body();
+
+                    if(id.equals(member.getMem_mid()) && pw.equals(member.getMem_pw())){
+                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                        startActivity(intent);
+
+                    }else if(id!=member.getMem_mid() || pw != member.getMem_pw()){
+                        Toast.makeText(LoginActivity.this,"아이디 및 비밀번호를 확인해주세요",Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Member> call, Throwable t) {
+
+
+            }
+        });
+
     }
 
     @OnClick(R.id.btn_join)
     public void onClickBtnJoin(View view){
         Intent intent = new Intent(LoginActivity.this,JoinActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onResume() {
+        et_user_id.setText("");
+        et_user_pw.setText("");
+        super.onResume();
     }
 
 
