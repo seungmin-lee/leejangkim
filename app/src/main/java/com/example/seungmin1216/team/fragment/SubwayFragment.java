@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.example.seungmin1216.team.MainActivity;
 import com.example.seungmin1216.team.R;
 import com.example.seungmin1216.team.SearchActivity;
 import com.example.seungmin1216.team.bus.BusProvider;
+import com.example.seungmin1216.team.data.SaveMember;
 import com.example.seungmin1216.team.data.StationName;
 import com.example.seungmin1216.team.event.DestinationStationName;
 import com.example.seungmin1216.team.event.NameEvent;
@@ -76,6 +78,7 @@ public class SubwayFragment extends Fragment {
         btn_bookmark_nonclick = view.findViewById(R.id.btn_bookmark_nonclick);
         bus.register(this);
 
+        Log.d("kkkk", "onCreateView: "+ SaveMember.getInstance().getMember().getMem_email());
 
         spinner = view.findViewById(R.id.sp1);
 

@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.seungmin1216.team.data.Member;
+import com.example.seungmin1216.team.data.SaveMember;
 import com.example.seungmin1216.team.retrofit.RetrofitService;
 
 import butterknife.BindView;
@@ -36,6 +37,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        Member member = new Member(-2L, "blank", "blank", "blank", "blank", "blank", "blank", "blank", -2L);
+        SaveMember.getInstance().setMember(member);
+
+        Log.d("kkkk", "onCreate: "+ SaveMember.getInstance().getMember().getMem_email());
 
         mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.d("lsm","전송성공");
                     Member member = response.body();
+                    SaveMember.getInstance().setMember(member);
 
                     if(id.equals(member.getMem_mid()) && pw.equals(member.getMem_pw())){
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
@@ -90,6 +97,11 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
+        Member member = new Member(-2L, "blank", "blank", "blank", "blank", "blank", "blank", "blank", -2L);
+        SaveMember.getInstance().setMember(member);
+
+        Log.d("kkkk", "onResume: "+ SaveMember.getInstance().getMember().getMem_email());
+
         et_user_id.setText("");
         et_user_pw.setText("");
         super.onResume();
