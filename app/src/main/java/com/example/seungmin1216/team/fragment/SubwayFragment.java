@@ -2,6 +2,7 @@ package com.example.seungmin1216.team.fragment;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,12 +11,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,6 +58,9 @@ public class SubwayFragment extends Fragment {
     @BindView(R.id.btn_bookmark_nonclick) Button btn_bookmark_nonclick;
     @BindView(R.id.txt_subway_origin) TextView txt_subway_origin;
     @BindView(R.id.txt_subway_destination) TextView txt_subway_destination;
+    @BindView(R.id.et_subway_memo) EditText et_subway_memo;
+    @BindView(R.id.myScrollView) ScrollView myScrollView;
+
 
 
     private Unbinder unbinder;
@@ -69,15 +76,26 @@ public class SubwayFragment extends Fragment {
         btn_bookmark_nonclick = view.findViewById(R.id.btn_bookmark_nonclick);
         bus.register(this);
 
+
         spinner = view.findViewById(R.id.sp1);
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(),R.array.location,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-
-
-
+        et_subway_memo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus == true){
+                    myScrollView.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            myScrollView.smoothScrollBy(0,800);
+                        }
+                    },100);
+                }
+            }
+        });
 
         return view;
     }
@@ -126,6 +144,18 @@ public class SubwayFragment extends Fragment {
         txt_subway_destination.setText(event.getName());
 
     }
+
+    @Override
+    public void onResume() {
+        et_subway_memo.requestFocus();
+        InputMethodManager mgr = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.showSoftInput(et_subway_memo, InputMethodManager.SHOW_IMPLICIT);
+        super.onResume();
+    }
+
+
+
+
 
 }
 

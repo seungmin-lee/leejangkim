@@ -2,15 +2,14 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/myScrollView"
     android:background="@drawable/fragment_background"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:orientation="vertical">
 
 
@@ -32,6 +31,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="출발역"
+                    android:layout_marginBottom="5dp"
                     android:textColor="@color/textcolor"
                     android:textSize="20dp" />
 
@@ -101,6 +101,8 @@
 
             </LinearLayout>
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,6 +127,32 @@
                     android:background="@drawable/spinner"
                     android:textSize="35dp" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:text="전달 사항"
+                    android:textColor="@color/textcolor"
+                    android:textSize="20dp" />
+
+                <EditText
+                    android:id="@+id/et_subway_memo"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@drawable/click_edittext"
+                    android:padding="5dp"
+                    android:textSize="20dp" />
             </LinearLayout>
 
             <RelativeLayout

@@ -22,29 +22,28 @@
         />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="내 위치 끄기"
         android:id="@+id/btn_pos"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/et_addr"
+        android:layout_marginTop="75dp"
+        android:background="@drawable/mylocation" />
 
     <Button
-        android:layout_below="@+id/et_addr"
         android:id="@+id/btn_ser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="serch"
-        android:layout_alignParentRight="true"
-
-        />
+        android:layout_alignEnd="@+id/et_addr"
+        android:layout_below="@+id/et_addr"
+        android:text="serch" />
 
     <Button
+        android:id="@+id/btn_ser2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ser2"
-        android:id="@+id/btn_ser2"
+        android:layout_alignEnd="@+id/et_addr"
         android:layout_below="@+id/btn_ser"
-        android:layout_alignParentRight="true"/>
+        android:text="ser2" />
 
 </RelativeLayout>

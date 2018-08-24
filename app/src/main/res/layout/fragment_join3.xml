@@ -66,6 +66,8 @@
                 android:layout_width="200dp"
                 android:layout_height="50dp"
                 android:layout_gravity="left"
+                android:inputType="number"
+                android:singleLine="true"
                 android:background="@drawable/nonclick_edittext"
                 android:hint="인증 코드"
                 android:padding="10dp"

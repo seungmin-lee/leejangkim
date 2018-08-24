@@ -60,6 +60,8 @@ public class Join1Fragment extends Fragment {
     String pw1;
     String pw2;
 
+    String lower_id;
+
 
 
     @Nullable
@@ -173,8 +175,11 @@ public class Join1Fragment extends Fragment {
     public void onClickBtnCheckId(View view){
         Log.d("ksj","onClickBtnCheckId");
         String id = et_input_id.getText().toString();
+        lower_id = id.toLowerCase();
 
-        Call<Integer> observ2 = RetrofitService.getInstance().getRetrofitRequest().calList(id);
+
+
+        Call<Integer> observ2 = RetrofitService.getInstance().getRetrofitRequest().calList(lower_id);
         observ2.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
