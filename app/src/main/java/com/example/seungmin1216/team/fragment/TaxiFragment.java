@@ -1,5 +1,6 @@
 package com.example.seungmin1216.team.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.example.seungmin1216.team.Map.MapMainActivity;
 import com.example.seungmin1216.team.R;
 
 import butterknife.BindView;
@@ -31,8 +34,9 @@ public class TaxiFragment extends Fragment {
     }
 
     Spinner spinner;
-    @BindView(R.id.btn_bookmark_nonclick)
-    Button btn_bookmark_nonclick;
+    @BindView(R.id.btn_bookmark_nonclick) Button btn_bookmark_nonclick;
+    @BindView(R.id.txt_subway_origin) TextView txt_subway_origin;
+    @BindView(R.id.txt_subway_destination) TextView txt_subway_destination;
     private Unbinder unbinder;
     Integer star_set =0;
 
@@ -67,5 +71,20 @@ public class TaxiFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.txt_subway_origin)
+    public void onClickTxtSubOrigin(View view){
+        Intent intent = new Intent(getActivity(),MapMainActivity.class);
+        intent.putExtra("type",1);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.txt_subway_destination)
+    public void onClickEtSubwayOrigin(View view){
+
+        Intent intent = new Intent(getActivity(),MapMainActivity.class);
+        intent.putExtra("type",2);
+        startActivity(intent);
     }
 }
