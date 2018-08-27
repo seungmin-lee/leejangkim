@@ -1,12 +1,10 @@
 package com.example.seungmin1216.team;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 
@@ -24,8 +22,10 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.subway_btn) Button subway_btn;
     @BindView(R.id.bus_btn) Button bus_btn;
     @BindView(R.id.taxi_btn) Button taxi_btn;
+    @BindView(R.id.btn_setting) Button btn_setting;
     @BindView(R.id.bookmark_btn) Button bookmark_btn;
     @BindView(R.id.btn_apply_list) Button btn_apply_list;
+
 
 
     @Override
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         main_view.setAdapter(viewPagerAdapter);
+
+
 
 
 
@@ -88,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
         taxi_btn.setBackgroundResource(R.drawable.click_edittext);
         bus_btn.setBackgroundResource(R.drawable.nonclick_edittext);
         subway_btn.setBackgroundResource(R.drawable.nonclick_edittext);
+    }
+
+    @OnClick(R.id.btn_setting)
+    public void onClickBtnSetting(View view){
+        Intent intent = new Intent(MainActivity.this,MypageActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.bookmark_btn)

@@ -48,14 +48,10 @@ public class JoinActivity extends AppCompatActivity {
 
     JoinAdapter joinAdapter;
 
-    @BindView(R.id.btn_left)
-    Button btn_left;
-    @BindView(R.id.btn_right)
-    Button btn_right;
-    @BindView(R.id.join_progressbar)
-    ProgressBar join_progressbar;
-    @BindView(R.id.join_viewpager)
-    SwipeViewPager join_viewpager;
+    @BindView(R.id.btn_left) Button btn_left;
+    @BindView(R.id.btn_right) Button btn_right;
+    @BindView(R.id.join_progressbar) ProgressBar join_progressbar;
+    @BindView(R.id.join_viewpager) SwipeViewPager join_viewpager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

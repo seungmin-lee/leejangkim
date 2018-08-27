@@ -3,9 +3,9 @@
     package="com.example.seungmin1216.team">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -17,11 +17,9 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            android:windowSoftInputMode="adjustPan"
-            >
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -29,16 +27,21 @@
         <activity android:name=".DestinationActivity" />
         <activity android:name=".OriginActivity" />
         <activity android:name=".BookmarkActivity" />
-        <activity android:name=".MainActivity"
-            android:windowSoftInputMode="adjustNothing"/>
+        <activity
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ApplyListActivity" />
         <activity android:name=".JoinActivity" />
         <activity android:name=".RequsetMain" />
-        <activity android:name=".SearchActivity"/>
-        <activity android:name=".Map.MapMainActivity"></activity>
-        <meta-data android:name="com.kakao.sdk.AppKey" android:value="25e46bd4cc70d75492861d269eb8b184"/>
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".Map.MapMainActivity" />
 
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="25e46bd4cc70d75492861d269eb8b184" />
 
+        <activity android:name=".MypageActivity" />
+        <activity android:name=".InfoChangeActivity"></activity>
     </application>
 
 </manifest>

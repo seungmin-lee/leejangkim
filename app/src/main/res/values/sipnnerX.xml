@@ -41,8 +41,8 @@
         <item>22 : 30 ~ 23 : 00</item>
         <item>23 : 00 ~ 23 : 30</item>
         <item>23 : 30 ~ 24 : 00</item>
-        <item>24 : 00 ~ 24 : 30</item>
-        <item>24 : 30 ~ 25 : 00</item>
+        <item>00 : 00 ~ 00 : 30</item>
+        <item>00 : 30 ~ 01 : 00</item>
     </string-array>
 
 </resources>
