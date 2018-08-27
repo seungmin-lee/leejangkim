@@ -178,7 +178,8 @@
                     android:background="@drawable/check_btn"
                     android:text="신청"
                     android:textColor="#ffffff"
-                    android:textSize="17dp" />
+                    android:textSize="17dp"
+                    android:id="@+id/request_btn"/>
 
             </RelativeLayout>
 

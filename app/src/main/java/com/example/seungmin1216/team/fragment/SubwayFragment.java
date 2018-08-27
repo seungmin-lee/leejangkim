@@ -1,7 +1,5 @@
 package com.example.seungmin1216.team.fragment;
 
-import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -25,15 +20,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.seungmin1216.team.BookmarkActivity;
-import com.example.seungmin1216.team.MainActivity;
 import com.example.seungmin1216.team.R;
 import com.example.seungmin1216.team.SearchActivity;
 import com.example.seungmin1216.team.bus.BusProvider;
 import com.example.seungmin1216.team.data.SaveMember;
-import com.example.seungmin1216.team.data.StationName;
 import com.example.seungmin1216.team.event.DestinationStationName;
 import com.example.seungmin1216.team.event.NameEvent;
+import com.example.seungmin1216.team.retrofit.RetrofitService;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -41,6 +34,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SubwayFragment extends Fragment {
 
@@ -63,6 +59,7 @@ public class SubwayFragment extends Fragment {
     @BindView(R.id.et_subway_memo) EditText et_subway_memo;
     @BindView(R.id.myScrollView) ScrollView myScrollView;
 
+    @BindView(R.id.datepicker) DatePicker datepicker;//
 
 
     private Unbinder unbinder;
@@ -130,6 +127,54 @@ public class SubwayFragment extends Fragment {
             btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
         }
     }
+
+    @OnClick(R.id.request_btn)
+    public void onClickrequest(View view){
+        String start_st = txt_subway_origin.getText().toString();
+        String end_st = txt_subway_destination.getText().toString();
+        Integer year = datepicker.getYear();
+        Integer month = datepicker.getMonth()+1;
+        Integer day = datepicker.getDayOfMonth();
+        String time = spinner.getSelectedItem().toString();
+        String hour = time.substring(0,2);
+        String ho2 = time.substring(0,1);
+        if(ho2.equals("0")){
+            hour = time.substring(1,2);
+        }
+        String minute = time.substring(5,7);
+        String post = et_subway_memo.getText().toString();
+        String mem_id = SaveMember.getInstance().getMember().getId().toString();
+
+        Call<Void> observ = RetrofitService.getInstance().getRetrofitRequest().inputlist(start_st,end_st,year.toString(),month.toString()
+                ,day.toString(),hour,minute,post,mem_id);
+
+
+        if(start_st.equals(null) || start_st.equals("")){
+            Toast.makeText(getActivity(), "출발역을 선택하세요.", Toast.LENGTH_LONG).show();
+        }else if(end_st.equals(null) || end_st.equals("")){
+            Toast.makeText(getActivity(), "도착역을 선택하세요.", Toast.LENGTH_LONG).show();
+        }else {
+            observ.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("ksj","전송성공");
+                        Toast.makeText(getActivity(), "신청이 완료되었습니다.", Toast.LENGTH_LONG).show();
+                        txt_subway_origin.setText(null);
+                        txt_subway_destination.setText(null);
+                        et_subway_memo.setText(null);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+
+                }
+            });
+        }
+
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
