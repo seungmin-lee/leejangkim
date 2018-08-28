@@ -1,6 +1,8 @@
 package com.example.seungmin1216.team;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -42,26 +44,35 @@ public class MypageActivity extends AppCompatActivity {
 
     @OnClick(R.id.txt_logout)
     public void onClickTxtLogout(View view) {
-
+        Intent intent = new Intent(this,PopupActivity.class);
+        startActivity(intent);
     }
+
+
 
     @OnClick(R.id.txt_notice2)
     public void onClickTxtNotice2(View view) {
-
+        Intent intent = new Intent(MypageActivity.this,NoticeActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.txt_direct_ques)
     public void onClickTxtDirectQues(View view) {
-
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("tel:010-3099-8902"));
+        startActivity(intent);
     }
 
     @OnClick(R.id.txt_reference)
     public void onClickTxtReference(View view) {
+        Intent intent = new Intent(MypageActivity.this,ReferenceActivity.class);
+        startActivity(intent);
 
     }
 
     @OnClick(R.id.txt_info_us)
     public void onClickTxtInfoUs(View view) {
+        Intent intent = new Intent(MypageActivity.this,AboutUsActivity.class);
+        startActivity(intent);
 
     }
 

@@ -1,10 +1,15 @@
 package com.example.seungmin1216.team;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -21,6 +26,9 @@ public class InfoChangeActivity extends AppCompatActivity {
     @BindView(R.id.et_age) EditText et_age;
     @BindView(R.id.btn_change_pw) Button btn_change_pw;
     @BindView(R.id.btn_change_info) Button btn_change_info;
+    @BindView(R.id.main_view) ScrollView main_view;
+
+    InputMethodManager imm;
 
 
     @Override
@@ -28,10 +36,31 @@ public class InfoChangeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_change);
         ButterKnife.bind(this);
+
+        main_view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(et_name.getWindowToken(), 0);
+                imm.hideSoftInputFromWindow(et_user_phone.getWindowToken(),0);
+                imm.hideSoftInputFromWindow(et_helper_phone.getWindowToken(),0);
+                imm.hideSoftInputFromWindow(et_etc.getWindowToken(),0);
+                imm.hideSoftInputFromWindow(et_age.getWindowToken(),0);
+            }
+        });
+
+
+        imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+
+
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
     @OnClick(R.id.btn_change_pw)
     public void onClickBtnChangePw(View view) {
+        Intent intent = new Intent(InfoChangeActivity.this,PwChangeActivity.class);
+        startActivity(intent);
 
     }
 

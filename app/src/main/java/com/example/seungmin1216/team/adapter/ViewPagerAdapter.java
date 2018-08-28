@@ -17,11 +17,11 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return SubwayFragment.getInstance();
+            return new SubwayFragment();
         } else if (position == 1){
-            return BusFragment.getInstance();
+            return new BusFragment();
         } else {
-            return TaxiFragment.getInstance();
+            return new TaxiFragment();
         }
     }
 

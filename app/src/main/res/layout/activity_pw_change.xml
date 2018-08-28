@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PwChangeActivity"
+    android:background="@drawable/back15"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/main_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 변경"
+            android:textSize="30dp"
+            android:textColor="@color/textcolor"
+            android:textStyle="bold"
+            />
+
+        <Button
+            android:id="@+id/btn_close_pw_change"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/white_right"
+            android:layout_alignParentRight="true"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="30dp">
+
+        <EditText
+            android:id="@+id/et_change_pw1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="비밀번호를 입력하세요"
+            android:textSize="20dp"
+            android:singleLine="true"
+            android:textColorHint="@color/texthintcolor"
+            android:background="@drawable/nonclick_edittext"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:padding="10dp"
+            android:password="true"
+            />
+        <TextView
+            android:id="@+id/txt_error_pw1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/texterrorcolor"
+            android:visibility="gone"
+            android:text="비밀번호를 입력해주세요."
+            />
+
+        <EditText
+            android:id="@+id/et_change_pw2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="비밀번호를 확인하세요"
+            android:textSize="20dp"
+            android:singleLine="true"
+            android:textColorHint="@color/texthintcolor"
+            android:background="@drawable/nonclick_edittext"
+            android:textColor="#ffffff"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:padding="10dp"
+            android:password="true"
+            />
+        <TextView
+            android:id="@+id/txt_error_pw2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/texterrorcolor"
+            android:visibility="gone"
+            android:text="비밀번호가 일치하지 않습니다."
+            />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,11 +1,15 @@
 package com.example.seungmin1216.team;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 
 import com.example.seungmin1216.team.adapter.ViewPagerAdapter;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_setting) Button btn_setting;
     @BindView(R.id.bookmark_btn) Button bookmark_btn;
     @BindView(R.id.btn_apply_list) Button btn_apply_list;
+    @BindView(R.id.main_view2) LinearLayout main_view2;
 
 
 
@@ -38,7 +43,17 @@ public class MainActivity extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         main_view.setAdapter(viewPagerAdapter);
 
+        main_view2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
+                imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            }
+        });
+
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 
 

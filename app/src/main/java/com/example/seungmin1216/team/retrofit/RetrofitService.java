@@ -21,8 +21,7 @@ public class RetrofitService {
 
     public RetrofitRequest init() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://112.219.131.13:6580/master/")//포트포워딩 주소
-                //.baseUrl("http://192.168.0.65:8090/master/") 원 주소
+                .baseUrl("http://112.219.131.13:6580/master/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

@@ -41,7 +41,12 @@
             android:value="25e46bd4cc70d75492861d269eb8b184" />
 
         <activity android:name=".MypageActivity" />
-        <activity android:name=".InfoChangeActivity"></activity>
+        <activity android:name=".InfoChangeActivity" />
+        <activity android:name=".PwChangeActivity" />
+        <activity android:name=".AboutUsActivity" />
+        <activity android:name=".ReferenceActivity" />
+        <activity android:name=".NoticeActivity" />
+        <activity android:name=".PopupActivity"></activity>
     </application>
 
 </manifest>
