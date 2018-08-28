@@ -122,6 +122,24 @@ public class SubwayFragment extends Fragment {
         if(star_set==0){
             star_set =1;
             btn_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
+            String start_st = txt_subway_origin.getText().toString();
+            String end_st = txt_subway_destination.getText().toString();
+            Long id = SaveMember.getInstance().getMember().getId();
+            Call<Void> insertBookmark = RetrofitService.getInstance().getRetrofitRequest().insertBookmark("0",start_st,end_st,id.toString());
+
+            insertBookmark.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("ksj", "전송성공");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+
+                }
+            });
         }else {
             star_set=0;
             btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
