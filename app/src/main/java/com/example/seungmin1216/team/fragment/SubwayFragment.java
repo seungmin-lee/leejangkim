@@ -58,8 +58,7 @@ public class SubwayFragment extends Fragment {
     @BindView(R.id.txt_subway_destination) TextView txt_subway_destination;
     @BindView(R.id.et_subway_memo) EditText et_subway_memo;
     @BindView(R.id.myScrollView) ScrollView myScrollView;
-
-    @BindView(R.id.datepicker) DatePicker datepicker;//
+    @BindView(R.id.datepicker) DatePicker datepicker;
 
 
     private Unbinder unbinder;
@@ -119,12 +118,30 @@ public class SubwayFragment extends Fragment {
 
     @OnClick(R.id.btn_bookmark_nonclick)
     public void onClickBtnBookmarkNonclick(View view){
+        String start_st = txt_subway_origin.getText().toString();
+        String end_st = txt_subway_destination.getText().toString();
+        Long mem_id = SaveMember.getInstance().getMember().getId();
         if(star_set==0){
             star_set =1;
             btn_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
+            Call<Void> observ = RetrofitService.getInstance().getRetrofitRequest().insertBookmark("0",start_st,end_st,mem_id.toString());
+            observ.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    if (response.isSuccessful()) {
+                        Log.d("ksj","전송성공");
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+
+                }
+            });
         }else {
             star_set=0;
             btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
+
         }
     }
 

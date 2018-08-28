@@ -29,6 +29,7 @@ public class RequsetMain extends AppCompatActivity {
         setContentView(R.layout.activity_requset_main);
         ButterKnife.bind(this);
 
+
         requestAdapter2 = new RequestAdapter2(getSupportFragmentManager());
         request_view.setAdapter(requestAdapter2);
 
