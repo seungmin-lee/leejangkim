@@ -90,6 +90,8 @@ public class BookmarkAdapter extends BaseAdapter {
             }
         });
 
+
+
         return view;
     }
 

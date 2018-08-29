@@ -5,18 +5,26 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.example.seungmin1216.team.adapter.ViewPagerAdapter;
+import com.example.seungmin1216.team.bus.BusProvider;
+import com.example.seungmin1216.team.event.BookmarkEvent;
+import com.example.seungmin1216.team.event.SubwayBookmarkEvent;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.btn_apply_list) Button btn_apply_list;
     @BindView(R.id.main_view2) LinearLayout main_view2;
 
+    Bus bus = BusProvider.getInstance().getBus();
+
 
 
     @Override
@@ -38,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        bus.register(this);
 
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -65,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
+                Log.d("ksj","pos2 : " + position);
                 if (position == 0){
                     onClickBtnSubway(main_view);
                 }else if (position == 1){
@@ -80,6 +92,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Subscribe
+    public void movBook(BookmarkEvent event){
+        main_view.setCurrentItem(event.getKind());
+        if(event.getKind() == 0){
+            SubwayBookmarkEvent subwayBookmarkEvent = new SubwayBookmarkEvent(event.getStart(),event.getEnd());
+            BusProvider.getInstance().getBus().post(subwayBookmarkEvent);
+        }
     }
 
     @OnClick(R.id.subway_btn)
@@ -124,6 +145,35 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(MainActivity.this,RequsetMain.class);
         startActivity(intent);
     }
+
+    private long pressedTime;
+    @Override
+    public void onBackPressed() {
+        if (pressedTime == 0) {
+            Toast.makeText(MainActivity.this, "한번 더 누르면 로그아웃 됩니다.", Toast.LENGTH_SHORT).show();
+            pressedTime = System.currentTimeMillis();
+
+        } else {
+            int sec = (int) (System.currentTimeMillis() - pressedTime);
+
+            if (sec > 1500) {
+                Toast.makeText(MainActivity.this, "한번 더 누르면 로그아웃 됩니다.", Toast.LENGTH_SHORT).show();
+            } else {
+
+                super.onBackPressed();
+                Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bus.unregister(this);
+    }
+
 
 
 }

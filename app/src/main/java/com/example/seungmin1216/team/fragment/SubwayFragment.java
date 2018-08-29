@@ -20,12 +20,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.seungmin1216.team.MainActivity;
 import com.example.seungmin1216.team.R;
 import com.example.seungmin1216.team.SearchActivity;
 import com.example.seungmin1216.team.bus.BusProvider;
 import com.example.seungmin1216.team.data.SaveMember;
 import com.example.seungmin1216.team.event.DestinationStationName;
 import com.example.seungmin1216.team.event.NameEvent;
+import com.example.seungmin1216.team.event.SubwayBookmarkEvent;
 import com.example.seungmin1216.team.retrofit.RetrofitService;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
@@ -75,6 +77,8 @@ public class SubwayFragment extends Fragment {
         btn_bookmark_nonclick = view.findViewById(R.id.btn_bookmark_nonclick);
         bus.register(this);
 
+
+
         Log.d("kkkk", "onCreateView: "+ SaveMember.getInstance().getMember().getMem_email());
 
         spinner = view.findViewById(R.id.sp1);
@@ -119,31 +123,41 @@ public class SubwayFragment extends Fragment {
 
     @OnClick(R.id.btn_bookmark_nonclick)
     public void onClickBtnBookmarkNonclick(View view){
-        if(star_set==0){
-            star_set =1;
-            btn_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
-            String start_st = txt_subway_origin.getText().toString();
-            String end_st = txt_subway_destination.getText().toString();
-            Long id = SaveMember.getInstance().getMember().getId();
-            Call<Void> insertBookmark = RetrofitService.getInstance().getRetrofitRequest().insertBookmark("0",start_st,end_st,id.toString());
+        String start_st = txt_subway_origin.getText().toString();
+        String end_st = txt_subway_destination.getText().toString();
 
-            insertBookmark.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Log.d("ksj", "전송성공");
+        Log.d("lsm",txt_subway_origin + " " +txt_subway_destination);
+
+        if(!start_st.equals("") && !end_st.equals("")){
+            if(star_set==0){
+                star_set =1;
+                btn_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
+                start_st = txt_subway_origin.getText().toString();
+                end_st = txt_subway_destination.getText().toString();
+                Long id = SaveMember.getInstance().getMember().getId();
+                Call<Void> insertBookmark = RetrofitService.getInstance().getRetrofitRequest().insertBookmark("0",start_st,end_st,id.toString());
+
+                insertBookmark.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("ksj", "전송성공");
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
 
-                }
-            });
-        }else {
-            star_set=0;
-            btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
+                    }
+                });
+            }else {
+                star_set=0;
+                btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
+            }
+        }else{
+            Toast.makeText(getActivity(),"출발역과 도착역을 확인해주세요.",Toast.LENGTH_LONG).show();
         }
+
     }
 
     @OnClick(R.id.request_btn)
@@ -213,14 +227,16 @@ public class SubwayFragment extends Fragment {
 
     @Override
     public void onResume() {
-        et_subway_memo.requestFocus();
         InputMethodManager mgr = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.showSoftInput(et_subway_memo, InputMethodManager.SHOW_IMPLICIT);
         super.onResume();
     }
 
-
-
+    @Subscribe
+    public void textAdd(SubwayBookmarkEvent event){
+        txt_subway_origin.setText(event.getStart());
+        txt_subway_destination.setText(event.getEnd());
+    }
 
 
 }

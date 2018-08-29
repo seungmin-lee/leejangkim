@@ -2,9 +2,7 @@ package com.example.seungmin1216.team.Map;
 
 import android.Manifest;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.AsyncTask;
@@ -13,19 +11,22 @@ import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.seungmin1216.team.R;
+import com.example.seungmin1216.team.data.item;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
 import net.daum.mf.map.api.MapReverseGeoCoder;
+import net.daum.mf.map.api.MapView;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -33,12 +34,17 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapMainActivity extends AppCompatActivity implements net.daum.mf.map.api.MapView.MapViewEventListener {
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
+
+public class MapMainActivity extends AppCompatActivity implements net.daum.mf.map.api.MapView.MapViewEventListener,MapView.POIItemEventListener{
     ArrayList<Item> load = new ArrayList<>();
     Item tmpItem;
     Point point = new Point();
@@ -50,8 +56,18 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
     EditText et_addr;
     Button btn_ser;
     Button btn_ser2;
+    Button btn_ser3;
+    RelativeLayout layout_ani;
+    TextView mapAddrs;
     net.daum.mf.map.api.MapView mapView;
     MapReverseGeoCoder reverseGeoCoder;
+    ArrayList<item> items = new ArrayList<>();
+    MapPoint centerPoint;
+    MapPOIItem mapPOIItem;
+    Button orgin;
+    Button destination;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +78,12 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
         btn_pos = findViewById(R.id.btn_pos);
         btn_ser = findViewById(R.id.btn_ser);
         btn_ser2 = findViewById(R.id.btn_ser2);
-
-        getHashKey();
-        Item tmpItem;
+        layout_ani = findViewById(R.id.layout_ani);
+        mapAddrs = findViewById(R.id.mapAddrs);
+        btn_ser3 = findViewById(R.id.btn_ser3);
+        orgin = findViewById(R.id.btn_start);
+        destination = findViewById(R.id.btn_arrive);
+        final Item tmpItem;
         Button button;
 
         AsyncTask.execute(new Runnable() {
@@ -79,9 +98,51 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
         btn_ser2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                load = getData(et_addr.getText().toString());
+                centerPoint = mapView.getMapCenterPoint();
+                Double centerLongi = centerPoint.getMapPointGeoCoord().longitude;
+                Double centerLati = centerPoint.getMapPointGeoCoord().latitude;
+                Call<item> observ = RetrofitService.getInstance().getRetrofitRequest().getDocuments(et_addr.getText().toString(),centerLongi.toString(),
+                        centerLati.toString(),"1000" , centerPoint.toString());
 
-                Log.d("jang","결과 : " + load.size());
+                observ.enqueue(new Callback<item>() {
+                    @Override
+                    public void onResponse(Call<item> call, Response<item> response) {
+
+                        mapView.removeAllPOIItems();
+
+                        if(response.isSuccessful()){
+                            for(int i=0;i<response.body().getDocuments().size();i++){
+                                Double y = Double.parseDouble(response.body().getDocuments().get(i).getY());
+                                Double x = Double.parseDouble(response.body().getDocuments().get(i).getX());
+
+                                Log.d("로그","받아오기 성공!" +response.body());
+
+
+                                response.body().getDocuments().get(i).getDistance();
+                                MapPOIItem marker = new MapPOIItem();
+                                marker.setItemName(response.body().getDocuments().get(i).getPlace_name());
+                                marker.setTag(30);
+                                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(y,x));
+                                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                                mapView.addPOIItem(marker);
+                                mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(y, x), 1, true);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<item> call, Throwable t) {
+                        Log.d("로그","받아오기 실패!");
+
+                    }
+
+
+                });
+
+
+
             }
         });
 
@@ -168,6 +229,8 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
             }
         });
 
+        mapView.setPOIItemEventListener(MapMainActivity.this);
+
 
     }
 
@@ -204,26 +267,26 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
         }
     }
 
-    private void getHashKey(){
-        PackageInfo packageInfo = null;
-        try {
-            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        if (packageInfo == null)
-            Log.e("KeyHash", "KeyHash:null");
-
-        for (Signature signature : packageInfo.signatures) {
-            try {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            } catch (NoSuchAlgorithmException e) {
-                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
-            }
-        }
-    }
+//    private void getHashKey(){
+//        PackageInfo packageInfo = null;
+//        try {
+//            packageInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_SIGNATURES);
+//        } catch (PackageManager.NameNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//        if (packageInfo == null)
+//            Log.e("KeyHash", "KeyHash:null");
+//
+//        for (Signature signature : packageInfo.signatures) {
+//            try {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.d("KeyHash", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            } catch (NoSuchAlgorithmException e) {
+//                Log.e("KeyHash", "Unable to get MessageDigest. signature=" + signature, e);
+//            }
+//        }
+//    }
 
 
 
@@ -282,6 +345,8 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
 //        mapView.addPOIItem(selectPoint);
 
 
+
+
     }
 
     @Override
@@ -295,7 +360,59 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
     }
 
     @Override
-    public void onMapViewDragStarted(net.daum.mf.map.api.MapView mapView, MapPoint mapPoint) {
+    public void onMapViewDragStarted(final net.daum.mf.map.api.MapView mapView, MapPoint mapPoint) {
+        btn_ser2.setVisibility(VISIBLE);
+        btn_ser2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                centerPoint = mapView.getMapCenterPoint();
+                Double centerLongi = centerPoint.getMapPointGeoCoord().longitude;
+                Double centerLati = centerPoint.getMapPointGeoCoord().latitude;
+                Call<item> observ = RetrofitService.getInstance().getRetrofitRequest().getDocuments(et_addr.getText().toString(),centerLongi.toString(),
+                        centerLati.toString(),"1000" , centerPoint.toString());
+                btn_ser2.setVisibility(GONE);
+                observ.enqueue(new Callback<item>() {
+                    @Override
+                    public void onResponse(Call<item> call, Response<item> response) {
+
+                        mapView.removeAllPOIItems();
+
+                        if(response.isSuccessful()){
+                            for(int i=0;i<response.body().getDocuments().size();i++){
+                                Double y = Double.parseDouble(response.body().getDocuments().get(i).getY());
+                                Double x = Double.parseDouble(response.body().getDocuments().get(i).getX());
+
+                                Log.d("로그","받아오기 성공!" +response.body());
+
+
+                                response.body().getDocuments().get(i).getDistance();
+                                MapPOIItem marker = new MapPOIItem();
+                                marker.setItemName(response.body().getDocuments().get(i).getPlace_name());
+                                marker.setTag(30);
+                                marker.setMapPoint(MapPoint.mapPointWithGeoCoord(y,x));
+                                marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
+                                marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+
+                                mapView.addPOIItem(marker);
+                                mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(y, x), 1, true);
+
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<item> call, Throwable t) {
+                        Log.d("로그","받아오기 실패!");
+
+                    }
+
+
+                });
+
+            }
+
+        });
 
     }
 
@@ -391,6 +508,57 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
         point.x = listAddress.get(0).getLongitude();
         point.y = listAddress.get(0).getLatitude();
         return point;
+
     }
 
+    @Override
+    public void onPOIItemSelected(final MapView mapView, MapPOIItem mapPOIItem) {
+
+        Log.d("yjh", "test" + mapPOIItem.getItemName());
+        layout_ani.setVisibility(VISIBLE);
+        Double centerLongi = centerPoint.getMapPointGeoCoord().longitude;
+        Double centerLati = centerPoint.getMapPointGeoCoord().latitude;
+        Call<item> observ = RetrofitService.getInstance().getRetrofitRequest().getDocuments(et_addr.getText().toString(),centerLongi.toString(),centerLati.toString(),
+                "1000", centerPoint.toString());
+        observ.enqueue(new Callback<item>() {
+            @Override
+            public void onResponse(Call<item> call, Response<item> response) {
+
+                mapView.removeAllPOIItems();
+
+                if(response.isSuccessful()) {
+                    for (int i = 0; i < response.body().getDocuments().size(); i++) {
+                        Double y = Double.parseDouble(response.body().getDocuments().get(i).getY());
+                        Double x = Double.parseDouble(response.body().getDocuments().get(i).getX());
+
+                        Log.d("로그", "받아오기 성공!" + response.body());
+
+                        mapAddrs.setText(response.body().getDocuments().get(i).getAddress_name() + "\n" + response.body().getDocuments().get(i).getPlace_name() + "\n" + response.body().getDocuments().get(i).getDistance());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<item> call, Throwable t) {
+                Log.d("로그","받아오기 실패!");
+
+            }
+
+        });
+    }
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem) {
+
+    }
+
+    @Override
+    public void onCalloutBalloonOfPOIItemTouched(MapView mapView, MapPOIItem mapPOIItem, MapPOIItem.CalloutBalloonButtonType calloutBalloonButtonType) {
+
+    }
+
+    @Override
+    public void onDraggablePOIItemMoved(MapView mapView, MapPOIItem mapPOIItem, MapPoint mapPoint) {
+
+    }
 }

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class Item {
     private Meta meta;
-    private ArrayList<Documents> documents;
+    private ArrayList<Documentss> documents;
 
     public Item() {
 
 
     }
 
-    public Item(Meta meta, ArrayList<Documents> documents) {
+    public Item(Meta meta, ArrayList<Documentss> documents) {
         this.meta = meta;
         this.documents = documents;
     }
@@ -24,11 +24,11 @@ public class Item {
         this.meta = meta;
     }
 
-    public ArrayList<Documents> getDocuments() {
+    public ArrayList<Documentss> getDocuments() {
         return documents;
     }
 
-    public void setDocuments(ArrayList<Documents> documents) {
+    public void setDocuments(ArrayList<Documentss> documents) {
         this.documents = documents;
     }
 }
