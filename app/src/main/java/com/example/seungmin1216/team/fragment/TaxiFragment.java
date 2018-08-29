@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,13 @@ import android.widget.TextView;
 
 import com.example.seungmin1216.team.Map.MapMainActivity;
 import com.example.seungmin1216.team.R;
+import com.example.seungmin1216.team.SearchActivity;
+import com.example.seungmin1216.team.bus.BusProvider;
+import com.example.seungmin1216.team.event.SubwayBookmarkEvent;
+import com.example.seungmin1216.team.event.Taxiplace2Event;
+import com.example.seungmin1216.team.event.TaxiplaceEvent;
+import com.squareup.otto.Bus;
+import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,12 +39,14 @@ public class TaxiFragment extends Fragment {
         }
 
         return curr;
+
     }
 
+    Bus bus = BusProvider.getInstance().getBus();
+
     Spinner spinner;
-    @BindView(R.id.btn_bookmark_nonclick) Button btn_bookmark_nonclick;
-    @BindView(R.id.txt_subway_origin) TextView txt_subway_origin;
-    @BindView(R.id.txt_subway_destination) TextView txt_subway_destination;
+    @BindView(R.id.txt_taxi_origin) TextView txt_taxi_origin;
+    @BindView(R.id.txt_taxi_destination) TextView txt_taxi_destination;
     private Unbinder unbinder;
     Integer star_set =0;
 
@@ -45,7 +55,8 @@ public class TaxiFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_taxi, container, false);
         unbinder = ButterKnife.bind(this,view);
-        btn_bookmark_nonclick = view.findViewById(R.id.btn_bookmark_nonclick);
+        bus.register(this);
+
 
         spinner = view.findViewById(R.id.sp3);
 
@@ -57,34 +68,39 @@ public class TaxiFragment extends Fragment {
         return view;
     }
 
-    @OnClick(R.id.btn_bookmark_nonclick)
-    public void onClickBtnBookmarkNonclick(View view){
-        if(star_set==0){
-            star_set =1;
-            btn_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
-        }else {
-            star_set=0;
-            btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
-        }
-    }
     @Override
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
     }
 
-    @OnClick(R.id.txt_subway_origin)
-    public void onClickTxtSubOrigin(View view){
+    @OnClick(R.id.txt_taxi_origin)
+    public void onClickTxtTaxiOrigin(View view){
+
         Intent intent = new Intent(getActivity(),MapMainActivity.class);
-        intent.putExtra("type",1);
         startActivity(intent);
     }
 
-    @OnClick(R.id.txt_subway_destination)
-    public void onClickEtSubwayOrigin(View view){
-
+    @OnClick(R.id.txt_taxi_destination)
+    public void onClickTxtTaxiDestination(View view){
         Intent intent = new Intent(getActivity(),MapMainActivity.class);
-        intent.putExtra("type",2);
         startActivity(intent);
     }
+
+    @Subscribe
+    public void getTaxi (TaxiplaceEvent taxiplaceEvent){
+        Log.d("lsm","2 : "+ taxiplaceEvent.getPlace_name() +" " +taxiplaceEvent.getAddr());
+        txt_taxi_origin.setText(taxiplaceEvent.getPlace_name() + "\n" + taxiplaceEvent.getAddr());
+
+    }
+
+    @Subscribe
+    public void getTaxi2 (Taxiplace2Event taxiplace2Event){
+
+        txt_taxi_destination.setText(taxiplace2Event.getPlace_name2() + "\n" + taxiplace2Event.getAddr2());
+
+    }
+
+
+
 }

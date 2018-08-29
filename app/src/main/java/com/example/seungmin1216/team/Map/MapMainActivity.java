@@ -1,6 +1,7 @@
 package com.example.seungmin1216.team.Map;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -21,7 +22,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.seungmin1216.team.R;
+import com.example.seungmin1216.team.bus.BusProvider;
+import com.example.seungmin1216.team.data.StationName;
 import com.example.seungmin1216.team.data.item;
+import com.example.seungmin1216.team.event.DestinationStationName;
+import com.example.seungmin1216.team.event.NameEvent;
+import com.example.seungmin1216.team.event.Taxiplace2Event;
+import com.example.seungmin1216.team.event.TaxiplaceEvent;
 
 import net.daum.mf.map.api.MapPOIItem;
 import net.daum.mf.map.api.MapPoint;
@@ -64,8 +71,10 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
     ArrayList<item> items = new ArrayList<>();
     MapPoint centerPoint;
     MapPOIItem mapPOIItem;
-    Button orgin;
-    Button destination;
+    Button btn_start;
+    Button btn_arrive;
+    String add;
+    String place_name;
 
 
 
@@ -81,8 +90,8 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
         layout_ani = findViewById(R.id.layout_ani);
         mapAddrs = findViewById(R.id.mapAddrs);
         btn_ser3 = findViewById(R.id.btn_ser3);
-        orgin = findViewById(R.id.btn_start);
-        destination = findViewById(R.id.btn_arrive);
+        btn_start = findViewById(R.id.btn_start);
+        btn_arrive = findViewById(R.id.btn_arrive);
         final Item tmpItem;
         Button button;
 
@@ -93,6 +102,33 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
                 // should be here
             }
         });
+
+        btn_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+
+                    TaxiplaceEvent taxiplaceEvent = new TaxiplaceEvent(add,place_name);
+                    BusProvider.getInstance().getBus().post(taxiplaceEvent);
+                    Log.d("lsm",taxiplaceEvent.getPlace_name() +" " +taxiplaceEvent.getAddr());
+
+                finish();
+            }
+        });
+
+        btn_arrive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+
+                Taxiplace2Event taxiplace2Event = new Taxiplace2Event(add,place_name);
+                BusProvider.getInstance().getBus().post(taxiplace2Event);
+
+                finish();
+            }
+        });
+
+
 
 
         btn_ser2.setOnClickListener(new View.OnClickListener() {
@@ -532,6 +568,9 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
                         Double x = Double.parseDouble(response.body().getDocuments().get(i).getX());
 
                         Log.d("로그", "받아오기 성공!" + response.body());
+
+                        add = response.body().getDocuments().get(i).getAddress_name();
+                        place_name = response.body().getDocuments().get(i).getPlace_name();
 
                         mapAddrs.setText(response.body().getDocuments().get(i).getAddress_name() + "\n" + response.body().getDocuments().get(i).getPlace_name() + "\n" + response.body().getDocuments().get(i).getDistance());
 

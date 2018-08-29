@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.seungmin1216.team.adapter.BookmarkAdapter;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,6 +33,7 @@ public class BookmarkActivity extends AppCompatActivity {
     ArrayList<Bookmark> request = new ArrayList<>();
     BookmarkAdapter bookmarkAdapter;
     @BindView(R.id.bookmark_list) ListView bookmark_list;
+    @BindView(R.id.btn_close_bookmark) Button btn_close_bookmark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,5 +78,10 @@ public class BookmarkActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @OnClick(R.id.btn_close_bookmark)
+    public void onClickBtnCloseBookmark(View view){
+        finish();
     }
 }

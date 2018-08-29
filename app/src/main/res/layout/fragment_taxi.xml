@@ -36,12 +36,12 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/txt_subway_origin"
+                    android:id="@+id/txt_taxi_origin"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/click_edittext"
                     android:padding="5dp"
-                    android:textSize="35dp" />
+                    android:textSize="15dp" />
 
 
             </LinearLayout>
@@ -64,12 +64,12 @@
                     android:textSize="20dp" />
 
                 <TextView
-                    android:id="@+id/txt_subway_destination"
+                    android:id="@+id/txt_taxi_destination"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/click_edittext"
                     android:padding="5dp"
-                    android:textSize="35dp" />
+                    android:textSize="15dp" />
 
 
             </LinearLayout>
@@ -130,15 +130,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="15dp">
 
-                <Button
-                    android:id="@+id/btn_bookmark_nonclick"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:background="@drawable/star2" />
 
                 <Button
                     android:layout_width="wrap_content"

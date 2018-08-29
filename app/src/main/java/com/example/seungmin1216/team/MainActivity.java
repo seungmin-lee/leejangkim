@@ -18,6 +18,7 @@ import com.example.seungmin1216.team.adapter.ViewPagerAdapter;
 import com.example.seungmin1216.team.bus.BusProvider;
 import com.example.seungmin1216.team.event.BookmarkEvent;
 import com.example.seungmin1216.team.event.SubwayBookmarkEvent;
+import com.example.seungmin1216.team.event.TaxiplaceEvent;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -173,7 +174,6 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         bus.unregister(this);
     }
-
 
 
 }
