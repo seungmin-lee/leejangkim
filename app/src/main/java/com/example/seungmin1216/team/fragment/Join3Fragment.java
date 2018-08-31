@@ -125,7 +125,7 @@ public class Join3Fragment extends Fragment {
             public void onClick(View v) {
 
                 try {
-                    GMailSender gMailSender = new GMailSender("1216seungmin@gmail.com", "Dltmdals5-");
+                    GMailSender gMailSender = new GMailSender("lee.jang.kim3@gmail.com", "ljk1234-");
                     Certification_Number = gMailSender.getEmailCode();
                     email= et_input_email.getText().toString();
                     gMailSender.sendMail("00 앱 회원가입 이메일 인증번호 ","안녕하세요.\n\n" +

@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".InfoChangeActivity"
     android:background="@drawable/back15"
+    android:id="@+id/infochange_main_view"
    >
 
     <LinearLayout

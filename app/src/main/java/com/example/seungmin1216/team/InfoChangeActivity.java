@@ -26,7 +26,7 @@ public class InfoChangeActivity extends AppCompatActivity {
     @BindView(R.id.et_age) EditText et_age;
     @BindView(R.id.btn_change_pw) Button btn_change_pw;
     @BindView(R.id.btn_change_info) Button btn_change_info;
-    @BindView(R.id.main_view) ScrollView main_view;
+    @BindView(R.id.infochange_main_view) ScrollView infochange_main_view;
 
     InputMethodManager imm;
 
@@ -35,9 +35,9 @@ public class InfoChangeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_change);
-        ButterKnife.bind(this);
+        ButterKnife.bind(InfoChangeActivity.this);
 
-        main_view.setOnClickListener(new View.OnClickListener() {
+        infochange_main_view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

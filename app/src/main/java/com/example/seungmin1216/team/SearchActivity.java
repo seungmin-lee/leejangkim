@@ -44,7 +44,6 @@ public class SearchActivity extends AppCompatActivity {
 
     String data;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,10 +125,10 @@ public class SearchActivity extends AppCompatActivity {
                 }
             }
 
-            Log.d("ksj","2");
+            Log.d("lsm","2");
         }
 
-        Log.d("ksj","real_list : " + real_list.size());
+        Log.d("lsm","real_list : " + real_list.size());
         listAdapter.notifyDataSetChanged();
     }
 
