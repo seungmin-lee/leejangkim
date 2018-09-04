@@ -51,6 +51,7 @@ public class BookmarkAdapter extends BaseAdapter {
             holder.st_sta = view.findViewById(R.id.st_sta);
             holder.end_sta = view.findViewById(R.id.end_sta);
             holder.del_sta = view.findViewById(R.id.del_sta);
+            holder.white_right = view.findViewById(R.id.white_right);
             view.setTag(holder);
         }else {
             holder = (Holder)view.getTag();
@@ -59,10 +60,13 @@ public class BookmarkAdapter extends BaseAdapter {
         final Bookmark item = (Bookmark)getItem(i);
         if (item.getBook_kind() == 0){
             holder.bm_image.setBackgroundResource(R.drawable.transportation);
+            holder.white_right.setVisibility(View.VISIBLE);
         }else if(item.getBook_kind() == 1){
             holder.bm_image.setBackgroundResource(R.drawable.bus);
+            holder.white_right.setVisibility(View.GONE);
         }else if(item.getBook_kind() == 2){
             holder.bm_image.setBackgroundResource(R.drawable.taxi);
+            holder.white_right.setVisibility(View.VISIBLE);
         }
         holder.st_sta.setText(item.getBook_start());
         holder.end_sta.setText(item.getBook_end());
@@ -101,5 +105,6 @@ public class BookmarkAdapter extends BaseAdapter {
         TextView st_sta;
         TextView end_sta;
         Button del_sta;
+        ImageView white_right;
     }
 }

@@ -63,7 +63,6 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
     EditText et_addr;
     Button btn_ser;
     Button btn_ser2;
-    Button btn_ser3;
     RelativeLayout layout_ani;
     TextView mapAddrs;
     net.daum.mf.map.api.MapView mapView;
@@ -89,7 +88,6 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
         btn_ser2 = findViewById(R.id.btn_ser2);
         layout_ani = findViewById(R.id.layout_ani);
         mapAddrs = findViewById(R.id.mapAddrs);
-        btn_ser3 = findViewById(R.id.btn_ser3);
         btn_start = findViewById(R.id.btn_start);
         btn_arrive = findViewById(R.id.btn_arrive);
         final Item tmpItem;

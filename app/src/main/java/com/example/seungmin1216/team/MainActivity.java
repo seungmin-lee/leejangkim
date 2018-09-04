@@ -16,9 +16,13 @@ import android.widget.Toast;
 
 import com.example.seungmin1216.team.adapter.ViewPagerAdapter;
 import com.example.seungmin1216.team.bus.BusProvider;
+import com.example.seungmin1216.team.data.SaveMember;
 import com.example.seungmin1216.team.event.BookmarkEvent;
+import com.example.seungmin1216.team.event.BusBookmarkEvent;
 import com.example.seungmin1216.team.event.SubwayBookmarkEvent;
 import com.example.seungmin1216.team.event.TaxiplaceEvent;
+import com.example.seungmin1216.team.retrofit.RetrofitService;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
@@ -26,6 +30,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +61,28 @@ public class MainActivity extends AppCompatActivity {
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         main_view.setAdapter(viewPagerAdapter);
+
+        Long id = SaveMember.getInstance().getMember().getId();
+        String key = FirebaseInstanceId.getInstance().getToken();
+
+        Call<Void> observ = RetrofitService.getInstance().getRetrofitRequest().updateKey(key,id.toString());
+
+        observ.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Log.d("lsm","전송성공");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+
+            }
+        });
+
+
 
         main_view2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
         if(event.getKind() == 0){
             SubwayBookmarkEvent subwayBookmarkEvent = new SubwayBookmarkEvent(event.getStart(),event.getEnd());
             BusProvider.getInstance().getBus().post(subwayBookmarkEvent);
+        }else if(event.getKind() == 1){
+            BusBookmarkEvent busBookmarkEvent = new BusBookmarkEvent(event.getStart());
+            BusProvider.getInstance().getBus().post(busBookmarkEvent);
         }
     }
 

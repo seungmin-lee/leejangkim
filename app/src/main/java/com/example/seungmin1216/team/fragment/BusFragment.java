@@ -23,7 +23,10 @@ import android.widget.RelativeLayout;
 import com.example.seungmin1216.team.BusPosActivity;
 import com.example.seungmin1216.team.R;
 import com.example.seungmin1216.team.adapter.BusAdapter;
+import com.example.seungmin1216.team.bus.BusProvider;
 import com.example.seungmin1216.team.data.Bus;
+import com.example.seungmin1216.team.event.BusBookmarkEvent;
+import com.squareup.otto.Subscribe;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -50,6 +53,7 @@ public class BusFragment extends Fragment {
         return curr;
     }
 
+    com.squareup.otto.Bus bus = BusProvider.getInstance().getBus();
     InputMethodManager imm;
     private Unbinder unbinder;
 
@@ -59,6 +63,7 @@ public class BusFragment extends Fragment {
 
     ArrayList<Bus> items = new ArrayList<>();
     ArrayList<Bus> real_list = new ArrayList<>();
+
 
     String bus_num;
 
@@ -72,6 +77,7 @@ public class BusFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_bus, container, false);
         unbinder = ButterKnife.bind(this, view);
+        bus.register(this);
 
         items = new ArrayList<>();
 
@@ -116,11 +122,13 @@ public class BusFragment extends Fragment {
                 String busstname = real_list.get(position).getBusStStaionName();
                 String busednname = real_list.get(position).getBusEndStationName();
 
+
                 intent.putExtra("id",busid);
                 intent.putExtra("num",busnum);
                 intent.putExtra("type",bustype);
                 intent.putExtra("st",busstname);
                 intent.putExtra("end",busednname);
+
 
                 startActivity(intent);
 
@@ -256,6 +264,7 @@ public class BusFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        bus.unregister(this);
     }
 
 
@@ -263,7 +272,40 @@ public class BusFragment extends Fragment {
         imm.hideSoftInputFromWindow(et_search_bus_num.getWindowToken(), 0);
     }
 
+    @Subscribe
+    public void textAdd(BusBookmarkEvent event){
+        String bookmark_bus_num = event.getStation();
+        String id = null;
+        String num = null;
+        String type = null;
+        String stname = null;
+        String edname = null;
 
+
+        for(int i =0;i<items.size();i++){
+            if(bookmark_bus_num.equals(items.get(i).getBusRouteNum())){
+                id = items.get(i).getBusRouteId();
+                num = items.get(i).getBusRouteNum();
+                type = items.get(i).getBusRouteType();
+                stname = items.get(i).getBusStStaionName();
+                edname = items.get(i).getBusEndStationName();
+
+
+                Log.d("lsm",id+" "+num+" "+type+" "+stname+" "+edname);
+            }
+        }
+        Intent intent = new Intent(getActivity(),BusPosActivity.class);
+
+        intent.putExtra("id",id);
+        intent.putExtra("num",num);
+        intent.putExtra("type",type);
+        intent.putExtra("st",stname);
+        intent.putExtra("end",edname);
+
+
+        startActivity(intent);
+
+    }
 
 
 

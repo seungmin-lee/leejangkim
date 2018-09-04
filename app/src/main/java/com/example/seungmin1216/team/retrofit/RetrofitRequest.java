@@ -52,4 +52,15 @@ public interface RetrofitRequest {
     @GET("getBookmark.do")//즐겨찾기 리스트
     Call<ArrayList<Bookmark>> getBookmark(@Query("mem_id") String mem_id);
 
+    @FormUrlEncoded
+    @POST("updateKey.do")//키 업데이트
+    Call<Void> updateKey(@Field("mem_key") String mem_key,@Field("id") String id);
+
+    @GET("chBookmark.do")//즐겨찾기 체크
+    Call<Integer> chBookmark(@Query("book_start") String book_start, @Query("mem_id") String mem_id);
+
+    @FormUrlEncoded
+    @POST("delBusBookmark.do")//즐겨찾기 삭제
+    Call<Void> delBusBookmark(@Field("book_start") String book_start, @Query("mem_id") String mem_id);
+
 }

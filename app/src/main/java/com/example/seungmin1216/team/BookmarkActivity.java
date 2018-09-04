@@ -1,7 +1,6 @@
 package com.example.seungmin1216.team;
 
-import android.app.Fragment;
-import android.content.Intent;
+
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,7 +14,6 @@ import com.example.seungmin1216.team.bus.BusProvider;
 import com.example.seungmin1216.team.data.Bookmark;
 import com.example.seungmin1216.team.data.SaveMember;
 import com.example.seungmin1216.team.event.BookmarkEvent;
-import com.example.seungmin1216.team.fragment.SubwayFragment;
 import com.example.seungmin1216.team.retrofit.RetrofitService;
 
 import java.util.ArrayList;
@@ -84,4 +82,5 @@ public class BookmarkActivity extends AppCompatActivity {
     public void onClickBtnCloseBookmark(View view){
         finish();
     }
+
 }

@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.example.seungmin1216.team.adapter.BusStationAdapter;
 import com.example.seungmin1216.team.data.BusPos;
 import com.example.seungmin1216.team.data.BusStation;
+import com.example.seungmin1216.team.data.SaveMember;
+import com.example.seungmin1216.team.retrofit.RetrofitService;
 
 
 import org.xmlpull.v1.XmlPullParser;
@@ -27,6 +29,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BusPosActivity extends AppCompatActivity {
 
@@ -52,9 +57,11 @@ public class BusPosActivity extends AppCompatActivity {
     String st_name;
     String end_name;
     String type_name;
+
     Integer lv_pos;
     Integer mCurrentX;
     Integer mCurrentY;
+    Integer star;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,31 @@ public class BusPosActivity extends AppCompatActivity {
         type = intent.getStringExtra("type");
         st_name = intent.getStringExtra("st");
         end_name = intent.getStringExtra("end");
+        String mem_id = SaveMember.getInstance().getMember().getId().toString();
+
+        Call<Integer> observ = RetrofitService.getInstance().getRetrofitRequest().chBookmark(num, mem_id);
+        observ.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful()) {
+                    star = response.body();
+                    Log.d("kkkk", "onResponse: "+star);
+                    if(star == 0){
+                        btn_bus_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
+                    }else{
+                        btn_bus_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+
+
+
 
         busStationAdapter = new BusStationAdapter(items,bus_items);
         lv_select_bus_list.setAdapter(busStationAdapter);
@@ -121,6 +153,8 @@ public class BusPosActivity extends AppCompatActivity {
 
         Log.d("lsm", "onCreate: "+ id + " "+ num + " "+ type+" " + st_name + " "+ end_name);
         Log.d("lsm2","아이템 : " +bus_items.size());
+
+
 
     }
 
@@ -331,6 +365,47 @@ public class BusPosActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_bus_bookmark_nonclick)
     public void  onClickBtnBusBookmark(View view){
+            String bus_id = txt_bus_num.getText().toString();
+            String myid = SaveMember.getInstance().getMember().getId().toString();
+
+            if(star == 0){
+                Call<Void> insertBookmark = RetrofitService.getInstance().getRetrofitRequest().insertBookmark("1",bus_id,"",myid);
+
+                insertBookmark.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("kkkk", "버스 즐겨찾기 전송성공");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+                star = 1;
+                btn_bus_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
+            }else if(star == 1){
+                String mem_id = SaveMember.getInstance().getMember().getId().toString();
+                Call<Void> delBusBookmark = RetrofitService.getInstance().getRetrofitRequest().delBusBookmark(num, mem_id);
+
+                delBusBookmark.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("kkkk", "성공");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+                star = 0;
+                btn_bus_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
+            }
 
     }
 

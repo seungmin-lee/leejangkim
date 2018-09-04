@@ -20,4 +20,5 @@ public class Member {
     private String mem_subp;
     private String mem_etc;
     private Long mem_age;
+    private String mem_key;
 }

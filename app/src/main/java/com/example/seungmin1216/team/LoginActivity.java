@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        Member member = new Member(-2L, "blank", "blank", "blank", "blank", "blank", "blank", "blank", -2L);
+        Member member = new Member(-2L, "blank", "blank", "blank", "blank", "blank", "blank", "blank", -2L, "blank");
         SaveMember.getInstance().setMember(member);
 
         Log.d("kkkk", "onCreate: "+ SaveMember.getInstance().getMember().getMem_email());
@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        Member member = new Member(-2L, "blank", "blank", "blank", "blank", "blank", "blank", "blank", -2L);
+        Member member = new Member(-2L, "blank", "blank", "blank", "blank", "blank", "blank", "blank", -2L, "blank");
         SaveMember.getInstance().setMember(member);
 
         Log.d("kkkk", "onResume: "+ SaveMember.getInstance().getMember().getMem_email());
