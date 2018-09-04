@@ -46,8 +46,9 @@
         <activity android:name=".AboutUsActivity" />
         <activity android:name=".ReferenceActivity" />
         <activity android:name=".NoticeActivity" />
-        <activity android:name=".PopupActivity"/>
-        <activity android:name=".BusPosActivity"></activity>
+        <activity android:name=".PopupActivity" />
+        <activity android:name=".BusPosActivity" />
+        <activity android:name=".SendEmailActivity"></activity>
     </application>
 
 </manifest>

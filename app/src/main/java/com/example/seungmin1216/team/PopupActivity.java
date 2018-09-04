@@ -14,7 +14,7 @@ import butterknife.OnClick;
 
 public class PopupActivity extends AppCompatActivity {
 
-    @BindView(R.id.btn_close) Button btn_close;
+    @BindView(R.id.btn_close) Button btn_close_popup;
     @BindView(R.id.btn_logout) Button btn_logout;
 
     @Override

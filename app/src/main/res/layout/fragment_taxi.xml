@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:layout_marginTop="5dp"
-                    android:text="도착역"
+                    android:text="도착 장소"
                     android:textColor="@color/textcolor"
                     android:textSize="20dp" />
 

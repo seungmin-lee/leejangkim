@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SendEmailActivity"
+    android:background="@drawable/back15"
+    android:id="@+id/infochange_main_view">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+        <RelativeLayout
+            android:id="@+id/menu_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email 문의"
+                android:textSize="30dp"
+                android:textColor="@color/textcolor"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/btn_close_send_email"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/close"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentRight="true"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/menu_bar"
+            android:id="@+id/menu_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp">
+
+            <TextView
+                android:id="@+id/txt_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이메일 "
+                android:textSize="20dp"
+                android:textColor="@color/textcolor"
+                android:layout_centerVertical="true"
+
+                />
+
+            <EditText
+                android:id="@+id/et_input_email"
+                android:layout_toRightOf="@+id/txt_email"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/fragment_background"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:textColor="@color/textcolor"
+                android:singleLine="true"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/title_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/menu_email"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="제목 "
+                android:textColor="@color/textcolor"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+                />
+
+            <EditText
+                android:id="@+id/et_send_email_title"
+                android:layout_width="291dp"
+                android:layout_height="45dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/txt_title"
+                android:background="@drawable/fragment_background"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColor="@color/textcolor"
+                android:textSize="30dp"
+
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@+id/title_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/contents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내용 "
+                android:textColor="@color/textcolor"
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                />
+
+            <EditText
+                android:id="@+id/et_send_email_contents"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:background="@drawable/fragment_background"
+                android:layout_below="@+id/contents"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="top"
+                android:padding="10dp"
+                android:textColor="@color/textcolor"/>
+
+        </RelativeLayout>
+
+
+        <Button
+            android:id="@+id/btn_send_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="right"
+            android:background="@drawable/fragment_background"
+            android:text="보내기"
+            android:textColor="@color/textcolor" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp" />
+
+
+
+    </LinearLayout>
+</ScrollView>

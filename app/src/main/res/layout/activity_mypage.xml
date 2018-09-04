@@ -79,6 +79,7 @@
 
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -112,16 +113,18 @@
             android:gravity="center_vertical"
             android:textColor="@color/textcolor"
             android:layout_below="@+id/img_line2"/>
+
         <TextView
-            android:id="@+id/txt_direct_ques"
+            android:id="@+id/txt_info_us"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="1:1 문의"
+            android:text="개발자 정보"
             android:textSize="20dp"
             android:paddingLeft="20dp"
             android:gravity="center_vertical"
             android:textColor="@color/textcolor"
             android:layout_below="@+id/txt_notice2"/>
+
 
 
     </RelativeLayout>
@@ -134,7 +137,7 @@
             android:id="@+id/txt_appinfo"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="앱 정보"
+            android:text="앱 관련 문의"
             android:textSize="30dp"
             android:paddingRight="20dp"
             android:gravity="right"
@@ -149,25 +152,27 @@
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"/>
         <TextView
-            android:id="@+id/txt_reference"
+            android:id="@+id/txt_direct_ques"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="저작권"
+            android:text="1:1 전화 문의"
             android:textSize="20dp"
             android:paddingLeft="20dp"
             android:gravity="center_vertical"
             android:textColor="@color/textcolor"
             android:layout_below="@+id/img_line3"/>
+
         <TextView
-            android:id="@+id/txt_info_us"
+            android:id="@+id/txt_email_ques"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:text="개발자 정보"
+            android:text="이메일 문의"
             android:textSize="20dp"
             android:paddingLeft="20dp"
             android:gravity="center_vertical"
             android:textColor="@color/textcolor"
-            android:layout_below="@+id/txt_reference"/>
+            android:layout_below="@+id/txt_direct_ques"/>
+
 
 
     </RelativeLayout>

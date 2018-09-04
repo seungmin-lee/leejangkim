@@ -111,7 +111,7 @@ public class JoinActivity extends AppCompatActivity {
             name = Join2Fragment.getInstance().input_name();
             user_phone = Join2Fragment.getInstance().input_phone();
 
-            if (!name.equals("") && !user_phone.equals("")) {
+            if (!name.equals("") && !user_phone.equals("") && user_phone.length() == 13) {
                 if (probar != 100) {
                     probar += 25;
                     join_progressbar.setProgress(probar);

@@ -5,8 +5,11 @@ import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import butterknife.BindView;
@@ -19,9 +22,12 @@ public class MypageActivity extends AppCompatActivity {
     @BindView(R.id.txt_logout) TextView txt_logout;
     @BindView(R.id.txt_notice2) TextView txt_notice2;
     @BindView(R.id.txt_direct_ques) TextView txt_direct_ques;
-    @BindView(R.id.txt_reference) TextView txt_reference;
+    @BindView(R.id.txt_email_ques) TextView txt_email_ques;
     @BindView(R.id.txt_info_us) TextView txt_info_us;
     @BindView(R.id.btn_close) Button btn_close;
+
+    private PopupWindow mPopupWindow ;
+
 
 
 
@@ -44,8 +50,33 @@ public class MypageActivity extends AppCompatActivity {
 
     @OnClick(R.id.txt_logout)
     public void onClickTxtLogout(View view) {
-        Intent intent = new Intent(this,PopupActivity.class);
-        startActivity(intent);
+        Log.d("lsm","로그아웃");
+        View popupView = getLayoutInflater().inflate(R.layout.activity_popup,null);
+        mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,330);
+
+        mPopupWindow.showAsDropDown(txt_logout, 50, 50);
+
+
+
+        mPopupWindow.setOutsideTouchable(false);
+        Button btn_close = (Button) popupView.findViewById(R.id.btn_close);
+        btn_close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPopupWindow.dismiss();
+            }
+        });
+        Button btn_logout = (Button)popupView.findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                Intent intent = new Intent(MypageActivity.this,LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_HISTORY);
+                startActivity(intent);
+            }
+        });
+
     }
 
 
@@ -62,9 +93,9 @@ public class MypageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.txt_reference)
+    @OnClick(R.id.txt_email_ques)
     public void onClickTxtReference(View view) {
-        Intent intent = new Intent(MypageActivity.this,ReferenceActivity.class);
+        Intent intent = new Intent(MypageActivity.this,SendEmailActivity.class);
         startActivity(intent);
 
     }
