@@ -1,8 +1,6 @@
 package com.example.seungmin1216.team.Map;
 
 
-import com.example.seungmin1216.team.data.item;
-
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -37,18 +35,21 @@ public interface RetrofitRequest {
     Call<Void> inputMemo(@Field("content") String content);
 */
 
-    @Headers({"Authorization: KakaoAK c43d731e351677497948e3d4d9ceca2d"})
-    @GET("/v2/local/search/address.json")
-    Call<Item> getItemList(@Query("query") String query);
-
 
     @Headers({"Authorization: KakaoAK c43d731e351677497948e3d4d9ceca2d"})
     @GET("/v2/local/search/keyword.json")
-    Call<item> getDocuments(@Query("query") String query, @Query("x") String x, @Query("y") String y, @Query("radius") String radius,
-                            @Query("place_name") String place_name);
+    Call<Item> getDocuments(@Query("query") String query, @Query("x") String x, @Query("y") String y, @Query("radius") String radius,
+                            @Query("place_name") String place_name, @Query("address_name") String address_name);
+
     @Headers({"Authorization: KakaoAK c43d731e351677497948e3d4d9ceca2d"})
     @GET("/v2/local/search/keyword.json")
-    Call<item> getDocuments2(@Query("query") String query, @Query("x") String x, @Query("y") String y);
+    Call<Item> getPlaceInfo(@Query("place_name") String place_name, @Query("address_name") String address_name);
 
+    @Headers({"Authorization: KakaoAK c43d731e351677497948e3d4d9ceca2d"})
+    @GET("/v2/local/search/keyword.json")
+    Call<Item> getSearch(@Query("query") String query);
 
+    @Headers({"Authorization: KakaoAK c43d731e351677497948e3d4d9ceca2d"})
+    @GET("/v2/local/search/keyword.json")
+    Call<Item> getRadius(@Query("query") String query, @Query("x") String x, @Query("y") String y, @Query("radius") String radius);
 }
