@@ -1,5 +1,6 @@
 package com.example.seungmin1216.team;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
@@ -12,9 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.example.seungmin1216.team.data.SaveMember;
+import com.example.seungmin1216.team.retrofit.RetrofitService;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MypageActivity extends AppCompatActivity {
 
@@ -26,7 +33,6 @@ public class MypageActivity extends AppCompatActivity {
     @BindView(R.id.txt_info_us) TextView txt_info_us;
     @BindView(R.id.btn_close) Button btn_close;
 
-    private PopupWindow mPopupWindow ;
 
 
 
@@ -50,32 +56,34 @@ public class MypageActivity extends AppCompatActivity {
 
     @OnClick(R.id.txt_logout)
     public void onClickTxtLogout(View view) {
-        Log.d("lsm","로그아웃");
-        View popupView = getLayoutInflater().inflate(R.layout.activity_popup,null);
-        mPopupWindow = new PopupWindow(popupView, LinearLayout.LayoutParams.WRAP_CONTENT,330);
 
-        mPopupWindow.showAsDropDown(txt_logout, 50, 50);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AlertDialogTheme);
+        builder.setTitle("안내");
+        builder.setMessage("로그아웃 하시겠습니까?");
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
 
-
-
-        mPopupWindow.setOutsideTouchable(false);
-        Button btn_close = (Button) popupView.findViewById(R.id.btn_close);
-        btn_close.setOnClickListener(new View.OnClickListener() {
+        builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                mPopupWindow.dismiss();
-            }
-        });
-        Button btn_logout = (Button)popupView.findViewById(R.id.btn_logout);
-        btn_logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            public void onClick(DialogInterface dialog, int which) {
                 finish();
                 Intent intent = new Intent(MypageActivity.this,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(intent);
             }
         });
+
+
+        builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
 
     }
 
