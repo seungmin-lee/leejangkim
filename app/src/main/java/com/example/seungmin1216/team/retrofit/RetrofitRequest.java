@@ -2,6 +2,7 @@ package com.example.seungmin1216.team.retrofit;
 
 import com.example.seungmin1216.team.data.Bookmark;
 import com.example.seungmin1216.team.data.Member;
+import com.example.seungmin1216.team.data.Notice;
 
 import java.util.ArrayList;
 
@@ -62,5 +63,30 @@ public interface RetrofitRequest {
     @FormUrlEncoded
     @POST("delBusBookmark.do")//즐겨찾기 삭제
     Call<Void> delBusBookmark(@Field("book_start") String book_start, @Query("mem_id") String mem_id);
+
+    @FormUrlEncoded
+    @POST("updateMember.do")//가입자 정보 수정
+    Call<Void> updateMember(@Field("mem_name") String mem_name,@Field("mem_myp") String mem_myp,@Field("mem_subp") String mem_subp,
+                            @Field("mem_etc") String mem_etc,@Field("mem_age") String mem_age,@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("updatePw.do")//가입자 비밀번호 수정
+    Call<Void> updatePw(@Field("mem_pw") String mem_pw,@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("insertNotice.do")//공지사항 생성
+    Call<Void> insertNotice(@Field("notice_title") String notice_title,@Field("notice_contents") String notice_contents,@Field("notice_date") String notice_date);
+
+    @FormUrlEncoded
+    @GET("updatePw.do")//공지사항 리스트
+    Call<Notice> selectNotice();
+
+    @FormUrlEncoded
+    @POST("updateNotice.do")//공지사항 고치기
+    Call<Void> updateNotice(@Field("notice_title") String notice_title,@Field("notice_contents") String notice_contents,
+                            @Field("notice_date") String notice_date,@Field("id") String id);
+
+
+
 
 }

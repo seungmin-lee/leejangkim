@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.seungmin1216.team.LoginActivity;
 import com.example.seungmin1216.team.R;
@@ -44,6 +43,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
-
 
 }
