@@ -10,6 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+
 public class NoticeActivity extends AppCompatActivity {
 
     @BindView(R.id.btn_close_notice) Button btn_close_notice;
