@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +24,8 @@ import com.example.seungmin1216.team.event.JoinEvent;
 import com.example.seungmin1216.team.retrofit.RetrofitService;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
+
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +74,7 @@ public class Join1Fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_join, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-
+        et_input_id.setFilters(new InputFilter[]{filterAlphaNum});
 
         et_input_id.addTextChangedListener(new TextWatcher() {
             @Override
@@ -85,7 +89,7 @@ public class Join1Fragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().equals("")) {
-                    txt_error_id.setText("아이디를 입력해주세요.");
+                    txt_error_id.setText("아이디를 입력해주세요(영어/숫자만 가능)");
                 }
 
 
@@ -195,6 +199,8 @@ public class Join1Fragment extends Fragment {
                         txt_error_id.setText("중복된 아이디 입니다.");
                         id_check_num = 1;
                     }
+
+                    Log.d("idcheck",id_check_num.toString());
                 }
             }
 
@@ -240,5 +246,16 @@ public class Join1Fragment extends Fragment {
 
         return pw_check;
     }
+
+    protected InputFilter filterAlphaNum = new InputFilter() {
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9]+$");
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
 
 }

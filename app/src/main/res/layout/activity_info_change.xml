@@ -18,14 +18,28 @@
         android:layout_marginTop="20dp"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="내 정보"
-            android:textSize="30dp"
-            android:textColor="@color/textcolor"
-            android:textStyle="bold"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="내 정보"
+                android:textSize="30dp"
+                android:textColor="@color/textcolor"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/btn_close"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/close"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="200dp"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -112,6 +126,7 @@
                 android:background="@null"
                 android:textColor="@color/textcolor"
                 android:textSize="25dp"
+                android:inputType="phone"
                 android:singleLine="true"/>
         </LinearLayout>
 
@@ -139,6 +154,7 @@
                 android:layout_height="wrap_content"
                 android:text="010-3099-8902"
                 android:background="@null"
+                android:inputType="phone"
                 android:textColor="@color/textcolor"
                 android:textSize="25dp"
                 android:singleLine="true"/>
@@ -166,7 +182,7 @@
                 android:id="@+id/et_etc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="히히 "
+                android:text=""
                 android:background="@null"
                 android:textColor="@color/textcolor"
                 android:textSize="25dp"

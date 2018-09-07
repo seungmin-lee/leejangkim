@@ -12,6 +12,7 @@ import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.seungmin1216.team.adapter.BusStationAdapter;
 import com.example.seungmin1216.team.data.BusPos;
@@ -376,6 +377,7 @@ public class BusPosActivity extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             Log.d("kkkk", "버스 즐겨찾기 전송성공");
+                            Toast.makeText(BusPosActivity.this, "즐겨찾기가 등록되었습니다.", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -395,6 +397,7 @@ public class BusPosActivity extends AppCompatActivity {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             Log.d("kkkk", "성공");
+                            Toast.makeText(BusPosActivity.this, "즐겨찾기가 삭제되었습니다.", Toast.LENGTH_LONG).show();
                         }
                     }
 

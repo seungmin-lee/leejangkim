@@ -38,6 +38,9 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        et_user_id.setSelection(et_user_id.getText().length());
+        et_user_pw.setSelection(et_user_pw.getText().length());
+
         Member member = new Member(-2L, "blank", "blank", "blank", "blank", "blank", "blank", "blank", -2L, "blank");
         SaveMember.getInstance().setMember(member);
 

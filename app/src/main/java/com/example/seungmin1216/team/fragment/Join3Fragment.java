@@ -1,5 +1,7 @@
 package com.example.seungmin1216.team.fragment;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -54,10 +56,15 @@ public class Join3Fragment extends Fragment {
     @BindView(R.id.txt_error_helper_phone) TextView txt_error_helper_phone;
 
 
+
     String email;
     String Certification_Number;
     Integer num;
     Integer num_verity;
+
+
+
+
 
     private Unbinder unbinder;
     @Nullable
@@ -65,7 +72,6 @@ public class Join3Fragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_join3, container, false);
         unbinder = ButterKnife.bind(this,view);
-
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .permitDiskReads()
@@ -123,7 +129,6 @@ public class Join3Fragment extends Fragment {
         btn_email_verti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 try {
                     GMailSender gMailSender = new GMailSender("lee.jang.kim3@gmail.com", "ljk1234-");
                     Certification_Number = gMailSender.getEmailCode();
@@ -158,6 +163,11 @@ public class Join3Fragment extends Fragment {
                     e.printStackTrace();
                 }
                 Log.d("lsm","code:"+Certification_Number + email  );
+
+
+
+
+
             }
         });
 
@@ -176,6 +186,20 @@ public class Join3Fragment extends Fragment {
         num_verity = 0;
 
         super.onResume();
+    }
+
+    @OnClick(R.id.btn_ok)
+    public void onClickBtnOk(View view){
+        String input_code = et_input_code.getText().toString();
+
+        if (input_code.equals(Certification_Number)) {
+            num = 1;
+            et_input_code.setText("인증되었습니다.");
+            num_verity = 1;
+        } else {
+            Toast.makeText(getActivity(), "인증번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
@@ -198,4 +222,6 @@ public class Join3Fragment extends Fragment {
 
         return num_verity;
     }
+
+
 }

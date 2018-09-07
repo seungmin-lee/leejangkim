@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.seungmin1216.team.MainActivity;
 import com.example.seungmin1216.team.R;
 import com.example.seungmin1216.team.SearchActivity;
 import com.example.seungmin1216.team.bus.BusProvider;
@@ -60,6 +59,7 @@ public class SubwayFragment extends Fragment {
     @BindView(R.id.txt_subway_destination) TextView txt_subway_destination;
     @BindView(R.id.et_subway_memo) EditText et_subway_memo;
     @BindView(R.id.myScrollView) ScrollView myScrollView;
+    @BindView(R.id.btn_subway_request) Button btn_subway_request;
 
     @BindView(R.id.datepicker) DatePicker datepicker;//
 
@@ -73,21 +73,19 @@ public class SubwayFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_subway, container, false);
-        unbinder=ButterKnife.bind(this,view);
+        unbinder= ButterKnife.bind(this,view);
         btn_bookmark_nonclick = view.findViewById(R.id.btn_bookmark_nonclick);
         bus.register(this);
-
-
 
         Log.d("kkkk", "onCreateView: "+ SaveMember.getInstance().getMember().getMem_email());
 
         spinner = view.findViewById(R.id.sp1);
 
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(),R.array.location,android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(getContext(), R.array.location,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        et_subway_memo.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*txt_subway_origin.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus == true){
@@ -99,7 +97,7 @@ public class SubwayFragment extends Fragment {
                     },100);
                 }
             }
-        });
+        });*/
 
         return view;
     }
@@ -142,6 +140,7 @@ public class SubwayFragment extends Fragment {
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
                             Log.d("ksj", "전송성공");
+                            Toast.makeText(getActivity(), "즐겨찾기가 등록되었습니다.", Toast.LENGTH_LONG).show();
                         }
                     }
 
@@ -160,8 +159,9 @@ public class SubwayFragment extends Fragment {
 
     }
 
-    @OnClick(R.id.request_btn)
+    @OnClick(R.id.btn_subway_request)
     public void onClickrequest(View view){
+        Log.d("kkkk", "onClickrequest: ");
         String start_st = txt_subway_origin.getText().toString();
         String end_st = txt_subway_destination.getText().toString();
         Integer year = datepicker.getYear();
@@ -174,7 +174,17 @@ public class SubwayFragment extends Fragment {
             hour = time.substring(1,2);
         }
         String minute = time.substring(5,7);
-        String post = et_subway_memo.getText().toString();
+
+        String ori_memo = SaveMember.getInstance().getMember().getMem_etc();
+        String post;
+        if(et_subway_memo.getText().toString().equals("")) {
+            post =ori_memo;
+        }else if(ori_memo.equals("")) {
+            post = et_subway_memo.getText().toString();
+        }else{
+            post = et_subway_memo.getText().toString() + " / " + ori_memo;
+        }
+
         String mem_id = SaveMember.getInstance().getMember().getId().toString();
 
         Call<Void> observ = RetrofitService.getInstance().getRetrofitRequest().inputlist(start_st,end_st,year.toString(),month.toString()
@@ -205,6 +215,8 @@ public class SubwayFragment extends Fragment {
             });
         }
 
+        Log.d("apply",start_st+" "+end_st+" "+year.toString()+" "+month.toString()+" " +day.toString()+" " +hour+" " +minute+" " +post+" " +mem_id);
+
     }
 
     @Override
@@ -227,10 +239,14 @@ public class SubwayFragment extends Fragment {
 
     @Override
     public void onResume() {
-        InputMethodManager mgr = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        mgr.showSoftInput(et_subway_memo, InputMethodManager.SHOW_IMPLICIT);
+        /*InputMethodManager mgr = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.showSoftInput(txt_subway_origin, InputMethodManager.SHOW_IMPLICIT);*/
+        myScrollView.smoothScrollTo(0,0);
         super.onResume();
     }
+
+
+
 
     @Subscribe
     public void textAdd(SubwayBookmarkEvent event){

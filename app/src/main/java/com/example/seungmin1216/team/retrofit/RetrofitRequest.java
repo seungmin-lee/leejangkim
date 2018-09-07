@@ -3,6 +3,7 @@ package com.example.seungmin1216.team.retrofit;
 import com.example.seungmin1216.team.data.Bookmark;
 import com.example.seungmin1216.team.data.Member;
 import com.example.seungmin1216.team.data.Notice;
+import com.example.seungmin1216.team.data.Request;
 
 import java.util.ArrayList;
 
@@ -32,14 +33,23 @@ public interface RetrofitRequest {
     Call<Integer> chEmail(@Query("mem_email") String mem_email);
 
     @FormUrlEncoded
+    @POST("updateMember.do")//가입자 정보 수정
+    Call<Void> updateMember(@Field("mem_name") String mem_name,@Field("mem_myp") String mem_myp,@Field("mem_subp") String mem_subp,
+                            @Field("mem_etc") String mem_etc,@Field("mem_age") String mem_age,@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("updatePw.do")//가입자 비밀번호 수정
+    Call<Void> updatePw(@Field("mem_pw") String mem_pw,@Field("id") String id);
+
+    @FormUrlEncoded
     @POST("inputMember.do")//가입
     Call<Void> inputMember(@Field("mem_name") String mem_name, @Field("mem_mid") String mem_mid, @Field("mem_pw") String mem_pw,
                            @Field("mem_myp") String mem_myp, @Field("mem_email") String mem_addr, @Field("mem_subp") String mem_subp,
-                           @Field("mem_etc") String mem_kind,@Field("mem_age") String mem_age);
+                           @Field("mem_etc") String mem_kind, @Field("mem_age") String mem_age);
 
     @FormUrlEncoded
     @POST("logMember.do")//로그인
-    Call<Member> logMember(@Field("mem_mid") String mem_mid ,@Field("mem_pw") String mem_pw);
+    Call<Member> logMember(@Field("mem_mid") String mem_mid, @Field("mem_pw") String mem_pw);
 
     @FormUrlEncoded
     @POST("insertBookmark.do")//즐겨찾기 추가
@@ -55,7 +65,7 @@ public interface RetrofitRequest {
 
     @FormUrlEncoded
     @POST("updateKey.do")//키 업데이트
-    Call<Void> updateKey(@Field("mem_key") String mem_key,@Field("id") String id);
+    Call<Void> updateKey(@Field("mem_key") String mem_key, @Field("id") String id);
 
     @GET("chBookmark.do")//즐겨찾기 체크
     Call<Integer> chBookmark(@Query("book_start") String book_start, @Query("mem_id") String mem_id);
@@ -65,28 +75,18 @@ public interface RetrofitRequest {
     Call<Void> delBusBookmark(@Field("book_start") String book_start, @Query("mem_id") String mem_id);
 
     @FormUrlEncoded
-    @POST("updateMember.do")//가입자 정보 수정
-    Call<Void> updateMember(@Field("mem_name") String mem_name,@Field("mem_myp") String mem_myp,@Field("mem_subp") String mem_subp,
-                            @Field("mem_etc") String mem_etc,@Field("mem_age") String mem_age,@Field("id") String id);
-
-    @FormUrlEncoded
-    @POST("updatePw.do")//가입자 비밀번호 수정
-    Call<Void> updatePw(@Field("mem_pw") String mem_pw,@Field("id") String id);
-
-    @FormUrlEncoded
     @POST("insertNotice.do")//공지사항 생성
-    Call<Void> insertNotice(@Field("notice_title") String notice_title,@Field("notice_contents") String notice_contents,@Field("notice_date") String notice_date);
+    Call<Void> insertNotice(@Field("notice_title") String notice_title, @Field("notice_contents") String notice_contents, @Field("notice_date") String notice_date);
 
     @FormUrlEncoded
-    @GET("updatePw.do")//공지사항 리스트
-    Call<Notice> selectNotice();
+    @POST("selectNotice.do")//공지사항 리스트
+    Call<ArrayList<Notice>> selectNotice(@Field("ok") String ok);
 
     @FormUrlEncoded
     @POST("updateNotice.do")//공지사항 고치기
-    Call<Void> updateNotice(@Field("notice_title") String notice_title,@Field("notice_contents") String notice_contents,
-                            @Field("notice_date") String notice_date,@Field("id") String id);
+    Call<Void> updateNotice(@Field("notice_title") String notice_title, @Field("notice_contents") String notice_contents,
+                            @Field("notice_date") String notice_date, @Field("id") String id);
 
-
-
-
+    @GET("returnRequest.do")//즐겨찾기 리스트
+    Call<ArrayList<Request>> returnRequest(@Query("mem_id") String mem_id);
 }

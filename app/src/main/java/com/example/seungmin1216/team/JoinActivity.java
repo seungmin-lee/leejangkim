@@ -1,23 +1,20 @@
 package com.example.seungmin1216.team;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.example.seungmin1216.team.adapter.JoinAdapter;
-import com.example.seungmin1216.team.bus.BusProvider;
-import com.example.seungmin1216.team.event.JoinEvent;
 import com.example.seungmin1216.team.fragment.Join1Fragment;
 import com.example.seungmin1216.team.fragment.Join2Fragment;
 import com.example.seungmin1216.team.fragment.Join3Fragment;
 import com.example.seungmin1216.team.fragment.Join4Fragment;
 import com.example.seungmin1216.team.retrofit.RetrofitService;
-import com.google.gson.Gson;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,6 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class JoinActivity extends AppCompatActivity {
+
 
     Integer pag = 0;
     Integer probar = 0;
@@ -51,11 +49,19 @@ public class JoinActivity extends AppCompatActivity {
     @BindView(R.id.btn_left) Button btn_left;
     @BindView(R.id.btn_right) Button btn_right;
     @BindView(R.id.join_progressbar) ProgressBar join_progressbar;
-    @BindView(R.id.join_viewpager) SwipeViewPager join_viewpager;
+    @BindView(R.id.join_viewpager)
+    SwipeViewPager join_viewpager;
+
+
+
+    ProgressDialog temp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
         setContentView(R.layout.activity_join);
         ButterKnife.bind(this);
 
@@ -63,9 +69,12 @@ public class JoinActivity extends AppCompatActivity {
         join_viewpager.setAdapter(joinAdapter);
         join_viewpager.setPagingEnabled(false);
 
+
+
         if (pag == 0) {
             btn_left.setBackgroundResource(R.drawable.close);
         }
+
 
     }
 
@@ -87,6 +96,7 @@ public class JoinActivity extends AppCompatActivity {
 
     }
 
+
     @OnClick(R.id.btn_right)
     public void onClickBtnRight(View view) {
 
@@ -96,7 +106,10 @@ public class JoinActivity extends AppCompatActivity {
             id_check = Join1Fragment.getInstance().id_check();
             pw_check = Join1Fragment.getInstance().pw_check();
 
+
+
             if (id_check == 0 && pw_check == 0) {
+
                 if (probar != 100) {
                     probar += 25;
                     join_progressbar.setProgress(probar);
@@ -106,6 +119,7 @@ public class JoinActivity extends AppCompatActivity {
                     }
                     join_viewpager.setCurrentItem(pag);
                 }
+
             }
         } else if (pag == 1) {
             name = Join2Fragment.getInstance().input_name();
@@ -127,7 +141,7 @@ public class JoinActivity extends AppCompatActivity {
             helper_phone = Join3Fragment.getInstance().input_helper_phone();
             num_verity = Join3Fragment.getInstance().num_verity();
 
-            if( !email.equals("") && !helper_phone.equals("")){
+            if( !email.equals("") && !helper_phone.equals("") && user_phone.length() == 13){
                 if(num_verity == 1 ) {
                     if (probar != 100) {
                         probar += 25;
@@ -146,6 +160,9 @@ public class JoinActivity extends AppCompatActivity {
             etc = Join4Fragment.getInstance().input_etc();
             age = Join4Fragment.getInstance().input_age();
             String age2 = age.toString();
+
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 
             if(!age2.equals("")){
 
@@ -181,14 +198,13 @@ public class JoinActivity extends AppCompatActivity {
 
 
         } else if (pag == 4) {
+            btn_left.setVisibility(View.GONE);
 
             finish();
 
         }
 
         Log.d("lsm","id" + id_check);
-
-
 
     }
 }

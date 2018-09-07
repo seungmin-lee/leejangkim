@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         Long id = SaveMember.getInstance().getMember().getId();
         String key = FirebaseInstanceId.getInstance().getToken();
 
+        Log.d("mainkk",id+ " "+ key);
+
         Call<Void> observ = RetrofitService.getInstance().getRetrofitRequest().updateKey(key,id.toString());
 
         observ.enqueue(new Callback<Void>() {

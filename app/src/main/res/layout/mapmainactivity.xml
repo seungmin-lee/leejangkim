@@ -33,6 +33,7 @@
             android:layout_weight="3"
             android:gravity="center_vertical"
             android:layout_marginRight="5dp"
+            android:paddingLeft="10dp"
             android:layout_gravity="center_vertical"
 
             />
@@ -91,7 +92,6 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/box_info"
         android:visibility="gone"
-
         >
         <TextView
             android:id="@+id/txt_place_name"
@@ -111,9 +111,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="카테고리"
-            android:textSize="15dp"
+            android:textSize="13dp"
             android:layout_toRightOf="@+id/txt_place_name"
-            android:layout_marginTop="23dp"
+            android:layout_marginTop="29dp"
             />
 
         <TextView
@@ -158,7 +158,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/txt_place_addr"
             android:layout_marginTop="25dp"
-            android:layout_marginLeft="25dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/phone" />
 
     </RelativeLayout>

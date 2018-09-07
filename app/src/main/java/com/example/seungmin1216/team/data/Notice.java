@@ -9,9 +9,11 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+
 public class Notice {
     private Long id;
     private String notice_title;
     private String notice_contents;
     private String notice_date;
+
 }

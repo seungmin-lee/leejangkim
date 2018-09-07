@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        >
+
+        <Button
+            android:id="@+id/btn_arrow"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/right_arrow"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            />
+        <ImageView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#90000000"
+            android:layout_toRightOf="@+id/btn_arrow"
+            />
+
+        <TextView
+            android:id="@+id/txt_notice_title"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/btn_arrow"
+            android:text="공지사항입니다."
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/txt_notice_date"
+            android:layout_toRightOf="@+id/txt_notice_title"
+            android:layout_marginLeft="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2018-09-06"
+            android:textSize="15dp"
+            android:layout_centerVertical="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

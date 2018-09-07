@@ -188,6 +188,7 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
 
 
                     if (response.isSuccessful()) {
+                        Log.d("jjj", response.toString());
                         for (int i = 0; i < response.body().getDocuments().size(); i++) {
 
 
@@ -197,31 +198,34 @@ public class MapMainActivity extends AppCompatActivity implements net.daum.mf.ma
                             String category = response.body().getDocuments().get(i).getCategory_group_name();
 
                             Log.d("ddd", name + " " + addr);
-                            Place_info item = new Place_info(name, addr,num,category);
+                            Place_info item = new Place_info(name, addr, num, category);
                             place_infos.add(item);
 
                             Double y = Double.parseDouble(response.body().getDocuments().get(i).getY());
                             Double x = Double.parseDouble(response.body().getDocuments().get(i).getX());
 
 
-                            Log.d("로그", "받아오기 성공!" + response.body());
+                            Log.d("jjj", "받아오기 성공!" + response.body().getDocuments().get(i).toString());
 
 
                             response.body().getDocuments().get(i).getDistance();
                             MapPOIItem marker = new MapPOIItem();
-                            marker.setShowCalloutBalloonOnTouch(false);
-                            marker.setItemName(response.body().getDocuments().get(i).getPlace_name());
-
-
                             marker.setTag(i);
+                            marker.setShowCalloutBalloonOnTouch(false);
                             marker.setMapPoint(MapPoint.mapPointWithGeoCoord(y, x));
+                            marker.setItemName(response.body().getDocuments().get(i).getPlace_name());
                             marker.setMarkerType(MapPOIItem.MarkerType.BluePin); // 기본으로 제공하는 BluePin 마커 모양.
-                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin); // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
+                            marker.setSelectedMarkerType(MapPOIItem.MarkerType.RedPin);
 
+                            // 마커를 클릭했을때, 기본으로 제공하는 RedPin 마커 모양.
 
                             mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(y, x), 1, true);
                             mapView.addPOIItem(marker);
+                            if (i == response.body().getDocuments().size() - 1) {
+                                mapView.setMapCenterPointAndZoomLevel(MapPoint.mapPointWithGeoCoord(Double.parseDouble(response.body().getDocuments().get(0).getY()), Double.parseDouble(response.body().getDocuments().get(0).getX())), 1, true);
 
+
+                            }
                         }
                     }
                 }

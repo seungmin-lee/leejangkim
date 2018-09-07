@@ -3,25 +3,38 @@ package com.example.seungmin1216.team;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ListView;
 
-import com.example.seungmin1216.team.adapter.RequestAdapter2;
+
+import com.example.seungmin1216.team.adapter.SubwayAdapter;
 import com.example.seungmin1216.team.adapter.ViewPagerAdapter;
+import com.example.seungmin1216.team.data.Request;
+import com.example.seungmin1216.team.data.SaveMember;
+import com.example.seungmin1216.team.retrofit.RetrofitService;
 
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RequsetMain extends AppCompatActivity {
 
-    @BindView(R.id.request_view) ViewPager request_view;
-    @BindView(R.id.bus_requset) Button bus_request;
-    @BindView(R.id.subway_requset) Button subway_request;
-    @BindView(R.id.taxi_requset) Button taxi_request;
-    RequestAdapter2 requestAdapter2;
+
+    @BindView(R.id.lv_subRequest)ListView lv_subRequest;
+    @BindView(R.id.btn_refresh) Button btn_refresh;
+    ArrayList<Request> items = new ArrayList<>();
+    SubwayAdapter subwayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,57 +42,40 @@ public class RequsetMain extends AppCompatActivity {
         setContentView(R.layout.activity_requset_main);
         ButterKnife.bind(this);
 
+        SettingRequestList();
 
-        requestAdapter2 = new RequestAdapter2(getSupportFragmentManager());
-        request_view.setAdapter(requestAdapter2);
 
-        request_view.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+    }
+
+    @OnClick(R.id.btn_refresh)
+    public void onClickBtnRefresh(View view){
+        Animation shake = AnimationUtils.loadAnimation(this,R.anim.shake);
+        btn_refresh.startAnimation(shake);
+        SettingRequestList();
+
+    }
+
+    public void SettingRequestList(){
+        String mem_id = SaveMember.getInstance().getMember().getId().toString();
+
+        Call<ArrayList<Request>> observ = RetrofitService.getInstance().getRetrofitRequest().returnRequest(mem_id);
+
+        observ.enqueue(new Callback<ArrayList<Request>>() {
             @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            public void onResponse(Call<ArrayList<Request>> call, Response<ArrayList<Request>> response) {
+                items = response.body();
+                subwayAdapter = new SubwayAdapter(items);
+                lv_subRequest.setAdapter(subwayAdapter);
             }
 
             @Override
-            public void onPageSelected(int position) {
-                if (position == 0) {
-                    RequestSubway(request_view);
-                } else if (position == 1) {
-                    RequestBus(request_view);
-                } else if (position == 2) {
-                    RequestTaxi(request_view);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
+            public void onFailure(Call<ArrayList<Request>> call, Throwable t) {
 
             }
         });
     }
 
-        @OnClick(R.id.subway_requset)
-        public void RequestSubway(View view){
-            request_view.setCurrentItem(0);
-            subway_request.setBackgroundResource(R.drawable.click_edittext);
-            taxi_request.setBackgroundResource(R.drawable.nonclick_edittext);
-            bus_request.setBackgroundResource(R.drawable.nonclick_edittext);
-        }
-
-        @OnClick(R.id.bus_requset)
-            public void RequestBus(View view){
-                request_view.setCurrentItem(1);
-                subway_request.setBackgroundResource(R.drawable.nonclick_edittext);
-                taxi_request.setBackgroundResource(R.drawable.nonclick_edittext);
-                bus_request.setBackgroundResource(R.drawable.click_edittext);
-        }
 
 
-        @OnClick(R.id.taxi_requset)
-            public void RequestTaxi(View view){
-                request_view.setCurrentItem(2);
-                subway_request.setBackgroundResource(R.drawable.nonclick_edittext);
-                taxi_request.setBackgroundResource(R.drawable.click_edittext);
-                bus_request.setBackgroundResource(R.drawable.nonclick_edittext);
-        }
 
 }

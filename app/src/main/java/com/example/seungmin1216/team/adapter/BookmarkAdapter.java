@@ -59,7 +59,7 @@ public class BookmarkAdapter extends BaseAdapter {
 
         final Bookmark item = (Bookmark)getItem(i);
         if (item.getBook_kind() == 0){
-            holder.bm_image.setBackgroundResource(R.drawable.transportation);
+            holder.bm_image.setBackgroundResource(R.drawable.train);
             holder.white_right.setVisibility(View.VISIBLE);
         }else if(item.getBook_kind() == 1){
             holder.bm_image.setBackgroundResource(R.drawable.bus);

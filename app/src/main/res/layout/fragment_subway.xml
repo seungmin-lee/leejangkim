@@ -5,6 +5,8 @@
     android:layout_height="wrap_content"
     android:id="@+id/myScrollView"
     android:background="@drawable/fragment_background"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     >
 
     <LinearLayout
@@ -179,7 +181,7 @@
                     android:text="신청"
                     android:textColor="#ffffff"
                     android:textSize="17dp"
-                    android:id="@+id/request_btn"/>
+                    android:id="@+id/btn_subway_request"/>
 
             </RelativeLayout>
 

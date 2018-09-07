@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".SendEmailActivity"
     android:background="@drawable/back15"
-    android:id="@+id/mainLayout"
-    >
+    android:id="@+id/infochange_main_view">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,14 +25,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Email 문의"
+                android:text="공지사항 등록"
                 android:textSize="30dp"
                 android:textColor="@color/textcolor"
                 android:textStyle="bold"
                 />
 
             <Button
-                android:id="@+id/btn_close_send_email"
+                android:id="@+id/btn_close_create_notice"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:background="@drawable/close"
@@ -45,28 +44,28 @@
 
 
 
-
         <RelativeLayout
             android:id="@+id/title_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/menu_email"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="30dp">
 
             <TextView
                 android:id="@+id/txt_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
                 android:text="제목 "
                 android:textColor="@color/textcolor"
-                android:textSize="20dp" />
+                android:textSize="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+                />
 
             <EditText
-                android:id="@+id/et_send_email_title"
-                android:layout_width="match_parent"
+                android:id="@+id/et_notice_title"
+                android:layout_width="291dp"
                 android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="12dp"
@@ -75,6 +74,7 @@
                 android:layout_toRightOf="@+id/txt_title"
                 android:background="@drawable/fragment_background"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:singleLine="true"
                 android:textColor="@color/textcolor"
                 android:textSize="30dp"
@@ -101,7 +101,7 @@
                 />
 
             <EditText
-                android:id="@+id/et_send_email_contents"
+                android:id="@+id/et_notice_contents"
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:background="@drawable/fragment_background"
@@ -116,7 +116,7 @@
 
 
         <Button
-            android:id="@+id/btn_send_email"
+            android:id="@+id/btn_notice_create"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
@@ -124,7 +124,7 @@
             android:layout_marginTop="20dp"
             android:layout_gravity="right"
             android:background="@drawable/fragment_background"
-            android:text="보내기"
+            android:text="등록"
             android:textColor="@color/textcolor" />
 
         <TextView

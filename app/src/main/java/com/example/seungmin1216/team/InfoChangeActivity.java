@@ -39,6 +39,7 @@ public class InfoChangeActivity extends AppCompatActivity {
     @BindView(R.id.btn_change_pw) Button btn_change_pw;
     @BindView(R.id.btn_change_info) Button btn_change_info;
     @BindView(R.id.infochange_main_view) ScrollView infochange_main_view;
+    @BindView(R.id.btn_close) Button btn_close;
 
     InputMethodManager imm;
 
@@ -55,6 +56,13 @@ public class InfoChangeActivity extends AppCompatActivity {
         et_helper_phone.setText(SaveMember.getInstance().getMember().getMem_subp());
         et_etc.setText(SaveMember.getInstance().getMember().getMem_etc());
         et_age.setText(SaveMember.getInstance().getMember().getMem_age().toString());
+
+        et_name.setSelection(et_name.getText().length());
+        et_user_phone.setSelection(et_user_phone.getText().length());
+        et_helper_phone.setSelection(et_helper_phone.getText().length());
+        et_etc.setSelection(et_etc.getText().length());
+        et_age.setSelection(et_age.getText().length());
+
 
         infochange_main_view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +89,11 @@ public class InfoChangeActivity extends AppCompatActivity {
         Intent intent = new Intent(InfoChangeActivity.this,PwChangeActivity.class);
         startActivity(intent);
 
+    }
+
+    @OnClick(R.id.btn_close)
+    public void onClickBtnClose(View view){
+        finish();
     }
 
     @OnClick(R.id.btn_change_info)
