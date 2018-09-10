@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     defaultConfig {
         applicationId "com.example.seungmin1216.team"
         minSdkVersion 22
@@ -37,7 +37,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation files('libs/libDaumMapAndroid.jar')
-
 }
 
 apply plugin: 'com.google.gms.google-services'

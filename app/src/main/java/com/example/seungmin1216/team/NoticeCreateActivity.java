@@ -35,7 +35,7 @@ public class NoticeCreateActivity extends AppCompatActivity {
     @OnClick(R.id.btn_notice_create)
     public void onClickBtnNoticeCreate(View view){
         String title = et_notice_title.getText().toString();
-        String contents = et_notice_title.getText().toString();
+        String contents = et_notice_contents.getText().toString();
 
         Calendar calendar = Calendar.getInstance();
         Integer year = calendar.get(Calendar.YEAR);

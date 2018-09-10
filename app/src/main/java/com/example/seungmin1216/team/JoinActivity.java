@@ -166,6 +166,10 @@ public class JoinActivity extends AppCompatActivity {
 
             if(!age2.equals("")){
 
+                if(etc.equals("")){
+                    etc="미입력";
+                }
+
                 Call<Void> observ = RetrofitService.getInstance().getRetrofitRequest().inputMember(name,id,pw,user_phone,email,helper_phone,etc,age2);
                 observ.enqueue(new Callback<Void>() {
                     @Override

@@ -87,6 +87,52 @@ public class TaxiFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         bus.register(this);
 
+        int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS);
+
+        if (permissionCheck == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, 1);
+        }
+
+
+        getActivity().registerReceiver(new BroadcastReceiver() {
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                switch (getResultCode()) {
+
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        // 전송 실패
+                        Toast.makeText(getActivity(), "전송 실패", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        // 서비스 지역 아님
+                        Toast.makeText(getActivity(), "서비스 지역이 아닙니다", Toast.LENGTH_SHORT).show();
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        // 무선 꺼짐
+                        Toast.makeText(getActivity(), "비행기 모드 입니다", Toast.LENGTH_SHORT).show();
+//                        sendSmsIntent(콜);
+
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        // PDU 실패
+                        Toast.makeText(getActivity(), "PDU Null", Toast.LENGTH_SHORT).show();
+                        break;
+                    case RESULT_OK:
+                        Toast.makeText(getActivity(), "신청이 완료되었습니다. \n문자로 승인여부 확인바랍니다.\n( 신청 후 10분 이내 )", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+                txt_taxi_origin.setText(null);
+                txt_taxi_destination.setText(null);
+                et_taxi_memo.setText(null);
+            }
+        }, new IntentFilter("SMS_SENT_ACTION"));
+
+
+
+
+
         return view;
     }
 
@@ -98,6 +144,7 @@ public class TaxiFragment extends Fragment {
 
     @OnClick(R.id.txt_taxi_origin)
     public void onClickTxtTaxiOrigin(View view) {
+
 
         Intent intent = new Intent(getActivity(), MapMainActivity.class);
         startActivity(intent);
@@ -119,41 +166,42 @@ public class TaxiFragment extends Fragment {
     @OnClick(R.id.btn_taxi_request)
     public void onClickBtnTaxiRequest(View view) {
 
-        String name = "";
-        String start_place = txt_taxi_origin.getText().toString();
-        String end_place = txt_taxi_destination.getText().toString();
-        String ori_memo = SaveMember.getInstance().getMember().getMem_etc();
-        String post;
-        if(et_taxi_memo.getText().toString().equals("")) {
-            post =ori_memo;
-        }else if(ori_memo.equals("")) {
-            post = et_taxi_memo.getText().toString();
-        }else{
-            post = et_taxi_memo.getText().toString() + " / " + ori_memo;
-        }
-        message2 = "- 이름: " + name + "\n-출발: " + start_place + "\n-도착: " + end_place + "\n-전달사항: " + post;
         Log.d("문자", message2);
-        sendSMS(phone.toString(), message2);
-
         int permissionCheck = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.SEND_SMS);
+
         if (permissionCheck == PackageManager.PERMISSION_DENIED) {
             ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.SEND_SMS}, 1);
             Toast.makeText(getActivity(), "권한을 허용하지않으면 서비스 이용이 불가능합니다.", Toast.LENGTH_SHORT).show();
         } else {
-
-
             SmsManager smsManager = SmsManager.getDefault();
+            String name = SaveMember.getInstance().getMember().getMem_name();
+            String start_place = txt_taxi_origin.getText().toString();
+            String end_place = txt_taxi_destination.getText().toString();
+            String memo = et_taxi_memo.getText().toString();
 
-            String sms_text = "sklfjskdljfklajfklwㄴㅇ라ㅣㅓㄴㅇ라ㅣㅓㄴㅇ라ㅣㅓㄴ아ㅣㅓㄴ아ㅣ러ㅏㅣ러쟈ㅐ덜나이ㅓㄹㄴ어량러더라ㅣㄴ어랴ㅐㅈ더라러나이ㅓ랴ㅐ러ㅏㅓ나이러제ㅑㅐㅂ덜나이ㅓㄹㅈ나이ㅓㄹ쟈ㅐ덜나ㅣㅓㄹ";
-            String sms_phone = phone.toString();
+            String ori_memo = SaveMember.getInstance().getMember().getMem_etc();
+            String post="";
+            if(memo.equals("")) {
+                post =ori_memo;
+            }else if(ori_memo.equals("미입력")) {
+                post = memo;
+            }else{
+                post="없음";
+            }
 
-            message2 = sms_text;
-            sendSMS(sms_phone,sms_text);
-            ArrayList<String> partMessage = smsManager.divideMessage(message2);
+            if (!start_place.equals("") && !end_place.equals("")){
+                message2 = "- 이름: " + name + "\n-출발: " + start_place + "\n-도착: " + end_place + "\n-전달사항: " + post;
+
+                String sms_phone = phone.toString();
+
+                sendSMS2(sms_phone,message2);
+                ArrayList<String> partMessage = smsManager.divideMessage(message2);
+            }else {
+                Toast.makeText(getActivity(),"정보를 입력해주세요",Toast.LENGTH_SHORT).show();
+            }
 
 
 
-            Log.d("jjj", sms_text + sms_phone);
         }
 
 
@@ -173,86 +221,22 @@ public class TaxiFragment extends Fragment {
 
     }
 
-    public void sendSMS(String smsNumber, String smsText) {
-        if (ischack) {
-            SmsManager smsManager = SmsManager.getDefault();
+    public void sendSMS2(String smsNumber, String smsText) {
+        SmsManager smsManager = SmsManager.getDefault();
 
-            String sendTo = smsNumber;
+        String sendTo = smsNumber;
 
-            ArrayList<String> partMessage = smsManager.divideMessage(smsText);
+        ArrayList<String> partMessage = smsManager.divideMessage(smsText);
+        ArrayList<PendingIntent> sendIntentArray = new ArrayList<>();
+        ArrayList<PendingIntent> deliveredIntentArray = new ArrayList<>();
 
-            smsManager.sendMultipartTextMessage(sendTo, null, partMessage, null, null);
-
-            Toast.makeText(getActivity(), "전송되었습니다.", Toast.LENGTH_SHORT).show();
-        }else if (!ischack) {
-            Toast.makeText(getActivity(), "전송실패", Toast.LENGTH_LONG).show();
-
+        for(int i = 0; i < partMessage.size(); i++) {
+            sendIntentArray.add(PendingIntent.getBroadcast(getActivity(), 0, new Intent("SMS_SENT_ACTION"), 0));
+            deliveredIntentArray.add(PendingIntent.getBroadcast(getActivity(), 0, new Intent("SMS_DELIVERED_ACTION"), 0));
         }
-        PendingIntent sentIntent = PendingIntent.getBroadcast(getActivity(), 0, new Intent("SMS_SENT_ACTION"), 0);
-        PendingIntent deliveredIntent = PendingIntent.getBroadcast(getActivity(), 0, new Intent("SMS_DELIVERED_ACTION"), 0);
 
-//        getActivity().registerReceiver(new BroadcastReceiver() {
-//
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                switch (getResultCode()) {
-//                    case RESULT_OK:
-//                        // 전송 성공
-//                        Toast.makeText(getActivity(), "전송 완료", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-//                        // 전송 실패
-//                        Toast.makeText(getActivity(), "전송 실패", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case SmsManager.RESULT_ERROR_NO_SERVICE:
-//                        // 서비스 지역 아님
-//                        Toast.makeText(getActivity(), "서비스 지역이 아닙니다", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case SmsManager.RESULT_ERROR_RADIO_OFF:
-//                        // 무선 꺼짐
-//                        Toast.makeText(getActivity(), "무선(Radio)가 꺼져있습니다", Toast.LENGTH_SHORT).show();
-////                        sendSmsIntent(phone);
-//
-//                        break;
-//                    case SmsManager.RESULT_ERROR_NULL_PDU:
-//                        // PDU 실패
-//                        Toast.makeText(getActivity(), "PDU Null", Toast.LENGTH_SHORT).show();
-//                        break;
-//                }
-//            }
-//        }, new IntentFilter("SMS_SENT_ACTION"));
-//
-//        getActivity().registerReceiver(new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                switch (getResultCode()) {
-//                    case Activity.RESULT_OK:
-//                        // 도착 완료
-//                        Toast.makeText(getActivity(), "SMS 도착 완료", Toast.LENGTH_SHORT).show();
-//                        break;
-//                    case Activity.RESULT_CANCELED:
-//                        // 도착 안됨
-//                        Toast.makeText(getActivity(), "SMS 도착 실패", Toast.LENGTH_SHORT).show();
-//                        break;
-//                }
-//            }
-//        }, new IntentFilter("SMS_DELIVERED_ACTION"));
-
-        SmsManager mSmsManager = SmsManager.getDefault();
-        mSmsManager.sendTextMessage(smsNumber, null, smsText, sentIntent, deliveredIntent);
+        smsManager.sendMultipartTextMessage(sendTo, null, partMessage, sendIntentArray, deliveredIntentArray);
     }
-
-//    public void sendSmsIntent(String number) {
-//        try {
-//            Uri smsUri = Uri.parse("sms:" + number);
-//            Intent sendIntent = new Intent(Intent.ACTION_SENDTO, smsUri);
-//            sendIntent.putExtra("sms_body", et.getText());
-//            startActivity(sendIntent);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
 }

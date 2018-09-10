@@ -98,6 +98,7 @@
                     android:layout_height="50dp"
                     android:background="@drawable/click_edittext"
                     android:padding="5dp"
+                    android:hint="기존 특이사항과 변경사항 있을 시 작성"
                     android:textSize="15dp" />
 
 

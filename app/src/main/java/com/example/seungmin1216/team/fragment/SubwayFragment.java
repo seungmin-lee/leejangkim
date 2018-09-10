@@ -123,6 +123,7 @@ public class SubwayFragment extends Fragment {
     public void onClickBtnBookmarkNonclick(View view){
         String start_st = txt_subway_origin.getText().toString();
         String end_st = txt_subway_destination.getText().toString();
+        Long id = SaveMember.getInstance().getMember().getId();
 
         Log.d("lsm",txt_subway_origin + " " +txt_subway_destination);
 
@@ -132,7 +133,7 @@ public class SubwayFragment extends Fragment {
                 btn_bookmark_nonclick.setBackgroundResource(R.drawable.star_gold);
                 start_st = txt_subway_origin.getText().toString();
                 end_st = txt_subway_destination.getText().toString();
-                Long id = SaveMember.getInstance().getMember().getId();
+
                 Call<Void> insertBookmark = RetrofitService.getInstance().getRetrofitRequest().insertBookmark("0",start_st,end_st,id.toString());
 
                 insertBookmark.enqueue(new Callback<Void>() {
@@ -152,6 +153,24 @@ public class SubwayFragment extends Fragment {
             }else {
                 star_set=0;
                 btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
+                Call<Void> selectDelBookmark = RetrofitService.getInstance().getRetrofitRequest().selectDelBookmark(id.toString(),start_st,end_st);
+
+                selectDelBookmark.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.d("ksj", "전송성공");
+                            Toast.makeText(getActivity(), "즐겨찾기가 삭제되었습니다.", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+
+                    }
+                });
+
+
             }
         }else{
             Toast.makeText(getActivity(),"출발역과 도착역을 확인해주세요.",Toast.LENGTH_LONG).show();
@@ -176,13 +195,15 @@ public class SubwayFragment extends Fragment {
         String minute = time.substring(5,7);
 
         String ori_memo = SaveMember.getInstance().getMember().getMem_etc();
-        String post;
-        if(et_subway_memo.getText().toString().equals("")) {
+        String memo = et_subway_memo.getText().toString();
+        String post="";
+
+        if(memo.equals("")) {
             post =ori_memo;
-        }else if(ori_memo.equals("")) {
-            post = et_subway_memo.getText().toString();
+        }else if(ori_memo.equals("미입력")) {
+            post = memo;
         }else{
-            post = et_subway_memo.getText().toString() + " / " + ori_memo;
+            post="없음";
         }
 
         String mem_id = SaveMember.getInstance().getMember().getId().toString();
@@ -205,6 +226,7 @@ public class SubwayFragment extends Fragment {
                         txt_subway_origin.setText(null);
                         txt_subway_destination.setText(null);
                         et_subway_memo.setText(null);
+                        btn_bookmark_nonclick.setBackgroundResource(R.drawable.star2);
                     }
                 }
 

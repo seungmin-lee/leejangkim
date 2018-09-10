@@ -89,4 +89,12 @@ public interface RetrofitRequest {
 
     @GET("returnRequest.do")//즐겨찾기 리스트
     Call<ArrayList<Request>> returnRequest(@Query("mem_id") String mem_id);
+
+    @FormUrlEncoded
+    @POST("deleteNotice.do")//즐겨찾기 리스트
+    Call<Void> deleteNotice(@Field("id") String id);
+
+    @FormUrlEncoded
+    @POST("selectDelBookmark.do")//지하철 즐겨찾기 삭제
+    Call<Void> selectDelBookmark(@Field("mem_id") String mem_id, @Field("book_start") String book_start, @Field("book_end") String book_end);
 }

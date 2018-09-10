@@ -12,7 +12,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
 
         <LinearLayout
@@ -153,8 +155,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@drawable/click_edittext"
+                    android:hint="기존 특이사항과 변경사항 있을 시 작성"
                     android:padding="5dp"
-                    android:textSize="20dp" />
+                    android:textSize="18dp" />
             </LinearLayout>
 
             <RelativeLayout

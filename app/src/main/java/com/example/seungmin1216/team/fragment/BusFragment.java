@@ -2,6 +2,7 @@ package com.example.seungmin1216.team.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.TrafficStats;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -68,6 +69,8 @@ public class BusFragment extends Fragment {
     String bus_num;
 
     BusAdapter busAdapter;
+
+
 
 
 

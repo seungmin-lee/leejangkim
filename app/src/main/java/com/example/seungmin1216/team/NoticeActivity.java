@@ -3,7 +3,9 @@ package com.example.seungmin1216.team;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -27,8 +29,7 @@ public class NoticeActivity extends AppCompatActivity {
     Button btn_close_notice;
     @BindView(R.id.lv_notice)
     ListView lv_notice;
-    @BindView(R.id.btn_create_notice)
-    Button btn_create_notice;
+    @BindView(R.id.btn_create_notice) Button btn_create_notice;
 
     NoticeAdapter noticeAdapter;
 
@@ -43,9 +44,23 @@ public class NoticeActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
 
-
-
         getInfoNotice();
+
+        lv_notice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                Log.d("lsm","dddddddd");
+                Notice item = itmes.get(position);
+
+                Intent intent = new Intent(NoticeActivity.this,NoticeDetailActivity.class);
+
+                intent.putExtra("title",item.getNotice_title());
+                intent.putExtra("date",item.getNotice_date());
+                intent.putExtra("contents",item.getNotice_contents());
+                startActivity(intent);
+            }
+        });
 
 
 
@@ -100,6 +115,10 @@ public class NoticeActivity extends AppCompatActivity {
         });
 
     }
+
+
+
+
 
 
 }
