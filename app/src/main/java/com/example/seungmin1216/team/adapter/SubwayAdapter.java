@@ -88,6 +88,9 @@ public class SubwayAdapter extends BaseAdapter{
             holder.txt_check.setTextColor(Color.parseColor("#ffffff"));
         }else if (item.getLi_appr() == 1){
             holder.txt_check.setText("승인");
+            holder.txt_check.setTextColor(Color.parseColor("#FFFF00"));
+        }else if (item.getLi_appr() == 2){
+            holder.txt_check.setText("거절");
             holder.txt_check.setTextColor(Color.parseColor("#ff0000"));
         }
 

@@ -2,6 +2,7 @@ package com.example.seungmin1216.team;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.bookmark_btn) Button bookmark_btn;
     @BindView(R.id.btn_apply_list) Button btn_apply_list;
     @BindView(R.id.main_view2) LinearLayout main_view2;
+    SharedPreferences pref;
 
     Bus bus = BusProvider.getInstance().getBus();
 
@@ -57,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         bus.register(this);
+        pref = getSharedPreferences("key", MODE_PRIVATE);
 
 
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -194,7 +197,8 @@ public class MainActivity extends AppCompatActivity {
             if (sec > 1500) {
                 Toast.makeText(MainActivity.this, "한번 더 누르면 로그아웃 됩니다.", Toast.LENGTH_SHORT).show();
             } else {
-
+                SharedPreferences.Editor edit = pref.edit();
+                edit.remove("ch").apply();
                 super.onBackPressed();
                 Intent intent = new Intent(MainActivity.this,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_HISTORY);

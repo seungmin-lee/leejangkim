@@ -2,6 +2,7 @@ package com.example.seungmin1216.team;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,7 @@ public class MypageActivity extends AppCompatActivity {
     @BindView(R.id.txt_email_ques) TextView txt_email_ques;
     @BindView(R.id.txt_info_us) TextView txt_info_us;
     @BindView(R.id.btn_close) Button btn_close;
-
+    SharedPreferences pref;
 
 
 
@@ -42,6 +43,7 @@ public class MypageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mypage);
         ButterKnife.bind(this);
+        pref = getSharedPreferences("key", MODE_PRIVATE);
 
 
 
@@ -65,6 +67,8 @@ public class MypageActivity extends AppCompatActivity {
         builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences.Editor edit = pref.edit();
+                edit.remove("ch").apply();
                 finish();
                 Intent intent = new Intent(MypageActivity.this,LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_HISTORY);

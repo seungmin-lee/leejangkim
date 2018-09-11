@@ -33,6 +33,7 @@ public class RequsetMain extends AppCompatActivity {
 
     @BindView(R.id.lv_subRequest)ListView lv_subRequest;
     @BindView(R.id.btn_refresh) Button btn_refresh;
+    @BindView(R.id.btn_close_bookmark) Button btn_close_bookmark;
     ArrayList<Request> items = new ArrayList<>();
     SubwayAdapter subwayAdapter;
 
@@ -53,6 +54,11 @@ public class RequsetMain extends AppCompatActivity {
         btn_refresh.startAnimation(shake);
         SettingRequestList();
 
+    }
+
+    @OnClick(R.id.btn_close_bookmark)
+    public void onClickClose(View view){
+        finish();
     }
 
     public void SettingRequestList(){
