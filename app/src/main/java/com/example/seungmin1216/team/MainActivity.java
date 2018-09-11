@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /*
     private long pressedTime;
     @Override
     public void onBackPressed() {
@@ -206,6 +207,23 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+    */
+
+    private long time= 0;
+    @Override
+    public void onBackPressed(){
+        if(System.currentTimeMillis()-time>=1500){
+            time=System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(),"한번 더 누르면 로그아웃 됩니다.",Toast.LENGTH_SHORT).show();
+        }else if(System.currentTimeMillis()-time<1500){
+            SharedPreferences.Editor edit = pref.edit();
+            edit.remove("ch").apply();
+            Intent intent = new Intent(MainActivity.this,LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NO_HISTORY);
+            startActivity(intent);
+        }
+    }
+
 
     @Override
     public void onDestroy() {
