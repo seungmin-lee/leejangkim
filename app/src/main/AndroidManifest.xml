@@ -10,6 +10,12 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
 
+    <meta-data
+        android:name="com.google.firebase.messaging.default_notification_icon"
+        android:resource="@drawable/app_noti" />
+    <meta-data android:name="com.google.firebase.messaging.default_notification_color"
+        android:resource="@color/dark" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -42,6 +48,8 @@
             android:name="com.kakao.sdk.AppKey"
             android:value="25e46bd4cc70d75492861d269eb8b184" />
 
+
+
         <activity android:name=".MypageActivity" />
         <activity android:name=".InfoChangeActivity" />
         <activity android:name=".PwChangeActivity" />
@@ -54,7 +62,8 @@
 
         <service android:name="firebase.MyFirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"
+                    />
             </intent-filter>
         </service>
         <service android:name=".firebase.MyFirebaseMessagingService">

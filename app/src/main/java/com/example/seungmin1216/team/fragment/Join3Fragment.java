@@ -133,7 +133,7 @@ public class Join3Fragment extends Fragment {
                     GMailSender gMailSender = new GMailSender("lee.jang.kim3@gmail.com", "ljk1234-");
                     Certification_Number = gMailSender.getEmailCode();
                     email= et_input_email.getText().toString();
-                    gMailSender.sendMail("00 앱 회원가입 이메일 인증번호 ","안녕하세요.\n\n" +
+                    gMailSender.sendMail("[ HELPER for you ] 회원가입 이메일 인증번호 ","안녕하세요.\n\n" +
                             "인증번호 : ["+Certification_Number +"]  입니다.\n\n" + "인증번호를 빈칸에 입력해주세요",email);
                     Toast.makeText(getActivity(), "이메일을 성공적으로 보냈습니다.", Toast.LENGTH_SHORT).show();
 

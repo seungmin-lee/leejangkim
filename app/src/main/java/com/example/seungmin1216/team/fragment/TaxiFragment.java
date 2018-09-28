@@ -77,7 +77,7 @@ public class TaxiFragment extends Fragment {
     PendingIntent sentPI;
 
     private String message2 = " "; // 문자 보낼 메시지
-    private String phone = "01071927746";  // 문자 보낼 휴대폰 번호
+    private String phone = "15884388";  // 서울시 장애인 콜택시 번호
     private boolean ischack = true;
 
     @Nullable
